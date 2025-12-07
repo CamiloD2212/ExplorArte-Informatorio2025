@@ -1,7 +1,12 @@
 from django.contrib import admin
-# Register your models here.
 from .models import Categoria, Artista, Arte
+from .forms import ArteForm
 
 admin.site.register(Categoria)
 admin.site.register(Artista)
-admin.site.register(Arte)
+
+
+@admin.register(Arte)
+class ArteAdmin(admin.ModelAdmin):
+    form = ArteForm
+

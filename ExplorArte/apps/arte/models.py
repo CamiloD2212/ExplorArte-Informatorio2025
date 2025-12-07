@@ -26,8 +26,7 @@ class Arte(models.Model):
     fecha_creacion = models.DateField(blank=True, null=True)
     direccion = models.CharField(max_length=255)
     url_imagen = models.ImageField(upload_to='media/imagenes/')
-    latitud = models.DecimalField(max_digits=9, decimal_places=6)
-    longitud = models.DecimalField(max_digits=9, decimal_places=6)
+    ubicacion = models.CharField(max_length=255, blank=True, null=True)
 
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     artista = models.ForeignKey(Artista, on_delete=models.CASCADE)
