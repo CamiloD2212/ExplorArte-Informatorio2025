@@ -4,11 +4,8 @@
 <p>Artista: {{ arte.artista }}</p>
 
 <img src="/{{ arte.url_imagen }}" width="300">
-
-<p>Ubicación: {{ arte.ubicacion }}</p>
-
-<a href="{% url 'arte_edit' arte.pk %}">✏ Editar</a>
-<a href="{% url 'arte_delete' arte.pk %}">🗑 Eliminar</a>
+<p>Dirección: {{ arte.direccion }}</p>
+<!-- <p>Ubicación: {{ arte.ubicacion }}</p> -->
 
 <a href="{% url 'arte_list' %}">⬅ Volver</a>
 
