@@ -1,14 +1,19 @@
+{% load static %}
+    <link rel="icon" type="logo/png" href="{% static 'favicon.png' %}">
+
+    <meta charset="UTF-8">
+    <title>Detalle de Obra - ExplorArte</title>
 <h1>{{ arte.titulo }}</h1>
 <p>{{ arte.descripcion }}</p>
 <p>Categoría: {{ arte.categoria }}</p>
 <p>Artista: {{ arte.artista }}</p>
 
-<img src="/{{ arte.url_imagen }}" width="300">
+<img src="{{ arte.url_imagen.url }}" width="300">
 <p>Dirección: {{ arte.direccion }}</p>
 <!-- <p>Ubicación: {{ arte.ubicacion }}</p> -->
 
 <a href="{% url 'arte_list' %}">⬅ Volver</a>
- 
+<a href="{% url 'arte_delete' arte.pk %}">🗑 Eliminar</a>
 <h2>Ubicación</h2>
 
 <div id="map" style="height: 400px; width: 100%; border-radius: 8px;"></div>

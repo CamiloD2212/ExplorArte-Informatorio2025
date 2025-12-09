@@ -20,6 +20,7 @@ from . import views
 urlpatterns = [
     path('', views.ArteListView.as_view(), name='arte_list'),
     path('<int:pk>/', views.ArteDetailView.as_view(), name='arte_detail'),
+    path('<int:pk>/eliminar/', views.ArteDeleteView.as_view(), name='arte_delete'),
     path('mapa/', views.mapa_general, name='arte_mapa'),
 
 ]
