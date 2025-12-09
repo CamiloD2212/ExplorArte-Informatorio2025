@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.arte',
     'apps.usuarios.apps.UsuariosConfig',
-    'apps.rutas',
     'apps.comentarios',
+    'apps.rutas',
 ]
 
 
