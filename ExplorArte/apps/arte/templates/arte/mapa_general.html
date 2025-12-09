@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Mapa de Obras</title>
-
+    <a href="{% url 'arte_list' %}">⬅ Volver</a>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
@@ -36,7 +36,8 @@ const obras = [
         {
             titulo: "{{ o.titulo|escapejs }}",
             artista: "{{ o.artista|escapejs }}",
-            imagen: "/{{ o.url_imagen }}",
+            imagen: "{{ o.url_imagen.url }}",
+
             url: "{% url 'arte_detail' o.pk %}",
             ubicacion: "{{ o.ubicacion }}",
         },

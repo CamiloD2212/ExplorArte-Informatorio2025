@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, DeleteView
 from .models import Arte
 from .forms import ArteForm
 
@@ -14,6 +14,11 @@ class ArteDetailView(DetailView):
     template_name = "arte/detail.html"
     context_object_name = "arte"
 
+class ArteDeleteView(DeleteView):
+    model = Arte
+    template_name = "arte/delete.html"
+    success_url = reverse_lazy("arte_list")
+    
 def home(request):
     return render(request, "home.html")
 
