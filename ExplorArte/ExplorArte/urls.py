@@ -1,13 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
-from apps.arte.views import home 
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", home, name="home"),   # <---- Home
-    path("admin/", admin.site.urls),
-    path("arte/", include("apps.arte.urls")),
+    path('admin/', admin.site.urls),
+    # las urls de la app arte
+    path('', include('apps.arte.urls', namespace='arte')),
 ]
 
 if settings.DEBUG:

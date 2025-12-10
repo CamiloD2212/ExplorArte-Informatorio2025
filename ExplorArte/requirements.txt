@@ -1,6 +1,5 @@
 asgiref==3.11.0
 Django==5.2.8
-django-leaflet==0.33.0
 django-map-widgets==0.5.1
 mysqlclient==2.2.7
 pillow==12.0.0

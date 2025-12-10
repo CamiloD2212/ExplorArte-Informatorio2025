@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Rutas - ExplorArte{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    <h4>Rutas</h4>
+    <form method="get" id="rutaForm">
+      <select class="form-select" name="ruta" onchange="document.getElementById('rutaForm').submit()">
+        <option value="">Seleccionar ruta</option>
+        {% for r in rutas %}
+          <option value="{{ r.id }}" {% if selected and selected.id == r.id %}selected{% endif %}>{{ r.nombre }}</option>
+        {% endfor %}
+      </select>
+
+      <div class="mt-3">
+        <p><strong>Seleccionada:</strong> {% if selected %}{{ selected.nombre }}{% else %}Ninguna{% endif %}</p>
+      </div>
+
+      {% if selected %}
+      <p>{{ selected.descripcion }}</p>
+      {% endif %}
+    </form>
+  </div>
+
+  <div class="col-md-8">
+    <h4>Mapa de la ruta</h4>
+    <div id="map" style="height:350px"></div>
+  </div>
+</div>
+
+<hr>
+
+<h5>Obras de la ruta</h5>
+<div class="row">
+  {% for arte in artes %}
+  <div class="col-md-3 mb-3">
+    <div class="card art-card">
+      <img src="{{ arte.url_imagen.url }}" class="card-img-top">
+      <div class="card-body">
+        <h6>{{ arte.titulo }}</h6>
+        <small class="text-muted">{{ arte.artista }}</small>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+    <p>No hay obras para la ruta seleccionada.</p>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Recibimos markers como string para que no rompa el formato en VSCode
+  const markersData = `{{ markers|default:"[]"|escapejs }}`;
+  const markers = JSON.parse(markersData || "[]");
+
+  const map = L.map('map').setView([-31.4, -64.2], 12);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+  }).addTo(map);
+
+  markers.forEach(m => {
+    if (m.lat && m.lng) {
+      L.marker([m.lat, m.lng]).addTo(map).bindPopup(m.titulo);
+    }
+  });
+</script>
+{% endblock %}

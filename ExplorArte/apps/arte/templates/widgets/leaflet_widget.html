@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (marker) marker.remove();
         marker = L.marker(e.latlng).addTo(map);
         document.getElementById(inputId).value = `${e.latlng.lat},${e.latlng.lng}`;
+
     });
 
     setTimeout(() => map.invalidateSize(), 500);

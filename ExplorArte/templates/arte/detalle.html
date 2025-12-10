@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ arte.titulo }} - ExplorArte{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <img src="{{ arte.url_imagen.url }}" class="img-fluid rounded">
+  </div>
+  <div class="col-md-6">
+    <h2>{{ arte.titulo }}</h2>
+    <p><strong>Artista:</strong> {{ arte.artista }}</p>
+    <p><strong>Categoría:</strong> {{ arte.categoria }}</p>
+    <p><strong>Creada:</strong> {{ arte.fecha_creacion }}</p>
+    <p><strong>Dirección:</strong> {{ arte.direccion }}</p>
+    <p>{{ arte.descripcion }}</p>
+  </div>
+</div>
+
+{% if coord %}
+  <h5 class="mt-3">Ubicación</h5>
+  <div id="map" style="height:300px;"></div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+{% if coord %}
+
+{{ coord|json_script:"coord-json" }}
+
+<script>
+  const coord = JSON.parse(
+      document.getElementById("coord-json").textContent
+  );
+
+  const lat = coord[0];
+  const lng = coord[1];
+
+  const map = L.map('map').setView([lat, lng], 15);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+  }).addTo(map);
+
+  L.marker([lat, lng]).addTo(map);
+</script>
+
+{% endif %}
+{% endblock %}
