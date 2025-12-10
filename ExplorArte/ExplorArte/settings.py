@@ -66,7 +66,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'Templates',   # <---- ACA
+            BASE_DIR / 'templates',  
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -160,3 +160,5 @@ LEAFLET_CONFIG = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+LOGIN_REDIRECT_URL = 'arte:index'
+LOGOUT_REDIRECT_URL = 'arte:index'

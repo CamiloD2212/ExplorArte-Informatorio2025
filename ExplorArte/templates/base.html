@@ -36,6 +36,27 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'arte:acerca' %}">Acerca</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'arte:contacto' %}">Contacto</a></li>
           </ul>
+          <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="#">👤 {{ user.username }}</a>
+              </li>
+              <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-link nav-link text-danger" style="display:inline; padding:0;">
+                      Cerrar sesión
+                  </button>
+              </form>
+
+            {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-success" href="{% url 'register' %}">Registrarse</a>
+                  </li>
+            {% endif %}
+          </ul>
         </div>
       </div>
     </nav>
