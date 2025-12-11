@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Agregar Arte{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-3">➕ Agregar Nuevo Arte</h2>
+    <hr>
+
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Corrige los siguientes errores:</strong>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ form.titulo.label_tag }}
+            {{ form.titulo }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.descripcion.label_tag }}
+            {{ form.descripcion }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.fecha_creacion.label_tag }}
+            {{ form.fecha_creacion }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.direccion.label_tag }}
+            {{ form.direccion }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.ubicacion.label_tag }}
+            {{ form.ubicacion }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.artista.label_tag }}
+            {{ form.artista }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.categoria.label_tag }}
+            {{ form.categoria }}
+        </div>
+
+        <!-- SELECCIONAR ARCHIVO MUY SIMPLE -->
+        <div class="mb-3">
+            {{ form.url_imagen.label_tag }}
+            {{ form.url_imagen }}
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+    </form>
+</div>
+
+{% endblock %}

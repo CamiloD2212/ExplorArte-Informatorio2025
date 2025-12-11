@@ -3,6 +3,7 @@
 
 {% block content %}
 <div class="row">
+
   <div class="col-md-3">
     <div class="sidebar">
       <h5>Categorías</h5>
@@ -45,7 +46,15 @@
   </div>
 
   <div class="col-md-9">
-    <h4>Explorador de Categorías</h4>
+
+    <div class="d-flex justify-content-between align-items-center">
+      <h4>Explorador de Categorías</h4>
+
+      {% if puede_agregar %}
+        <a href="{% url 'arte:crear_arte' %}" class="btn btn-success">➕ Agregar Artículo</a>
+      {% endif %}
+    </div>
+
     <p>Mostrando {{ artes.count }} obras</p>
 
     <div class="row">
@@ -73,8 +82,6 @@
 
 {% block extra_js %}
 <script>
-  // markers del backend: si no vienen, usamos array vacío.
-  // Usamos escapejs para que VSCode no marque errores y JSON.parse para asegurar formato JS válido.
   const markersData = `{{ markers|default:"[]"|escapejs }}`;
   const markers = JSON.parse(markersData || "[]");
 
