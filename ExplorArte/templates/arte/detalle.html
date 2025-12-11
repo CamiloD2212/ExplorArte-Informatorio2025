@@ -2,10 +2,12 @@
 {% block title %}{{ arte.titulo }} - ExplorArte{% endblock %}
 
 {% block content %}
+
 <div class="row">
   <div class="col-md-6">
     <img src="{{ arte.url_imagen.url }}" class="img-fluid rounded">
   </div>
+
   <div class="col-md-6">
     <h2>{{ arte.titulo }}</h2>
     <p><strong>Artista:</strong> {{ arte.artista }}</p>
@@ -21,18 +23,68 @@
   <div id="map" style="height:300px;"></div>
 {% endif %}
 
+<hr>
+<h3>Comentarios</h3>
+
+{% if arte.comentarios.all %}
+    {% for comentario in arte.comentarios.all %}
+    <div class="card my-2">
+        <div class="card-body">
+
+            <small class="text-muted">
+                <strong>{{ comentario.usuario.username }}</strong> •
+                {{ comentario.fecha|date:"d/m/Y H:i" }}
+            </small>
+
+            <p class="mt-2">{{ comentario.contenido }}</p>
+
+            <div class="mt-2">
+
+               
+                {% if comentario.usuario == user %}
+                    <a href="{% url 'editar_comentario' comentario.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+
+                
+                {% elif user.is_superuser %}
+                    <a href="{% url 'eliminar_comentario' comentario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p class="text-muted">No hay comentarios todavía.</p>
+{% endif %}
+
+<hr>
+
+<h4>Agregar comentario</h4>
+
+{% if not user.is_authenticated %}
+    <p>Debes <a href="{% url 'login' %}">iniciar sesión</a> para comentar.</p>
+
+{% elif not perms.comentarios.add_comentario %}
+    <p class="text-danger">No tienes permiso para comentar.</p>
+
+{% else %}
+    <form method="POST" action="{% url 'agregar_comentario' arte.id %}">
+        {% csrf_token %}
+        <textarea name="contenido" class="form-control" rows="3" placeholder="Escribe un comentario..."></textarea>
+        <button class="btn btn-primary mt-2">Comentar</button>
+    </form>
+{% endif %}
+
+{{ coord|json_script:"coord-json" }}
+
 {% endblock %}
 
 {% block extra_js %}
 {% if coord %}
-
-{{ coord|json_script:"coord-json" }}
-
 <script>
-  const coord = JSON.parse(
-      document.getElementById("coord-json").textContent
-  );
-
+  const coord = JSON.parse(document.getElementById("coord-json").textContent);
   const lat = coord[0];
   const lng = coord[1];
 
@@ -44,6 +96,5 @@
 
   L.marker([lat, lng]).addTo(map);
 </script>
-
 {% endif %}
 {% endblock %}
