@@ -34,17 +34,22 @@ def agregar_comentario(request, arte_id):
 def editar_comentario(request, comentario_id):
     comentario = get_object_or_404(Comentario, id=comentario_id)
 
-    # Solo autor puede editar
+    
     if request.user != comentario.usuario:
         messages.error(request, "Solo podés editar tus propios comentarios.")
-        return redirect(request.META.get("HTTP_REFERER", f"/arte/{comentario.arte.id}/"))
+        return redirect(f"/arte/{comentario.arte.id}/")
+
+
+    if request.method == "GET":
+        prev_url = request.META.get("HTTP_REFERER", f"/arte/{comentario.arte.id}/")
+        request.session["prev_url_edit"] = prev_url
 
     if request.method == "POST":
         form = ComentarioForm(request.POST, instance=comentario)
         if form.is_valid():
             form.save()
             messages.success(request, "Comentario actualizado correctamente.")
-            return redirect(request.META.get("HTTP_REFERER", f"/arte/{comentario.arte.id}/"))
+            return redirect(request.session.get("prev_url_edit", f"/arte/{comentario.arte.id}/"))
 
     else:
         form = ComentarioForm(instance=comentario)
@@ -53,6 +58,7 @@ def editar_comentario(request, comentario_id):
         "form": form,
         "comentario": comentario
     })
+
 
 
 @login_required
