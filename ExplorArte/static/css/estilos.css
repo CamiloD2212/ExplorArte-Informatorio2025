@@ -175,26 +175,7 @@ a.social-icon:nth-child(3) { background-color: var(--color-blue) !important; }
     text-decoration: underline !important;
 }
 
-/* Estadísticas */
-.text-purple-total {
-    font-size: 1.5rem;
-    font-weight: 700 !important;
-    color: var(--color-primary-purple) !important;
-}
-.category-item-style {
-    border: none !important; 
-    border-bottom: 1px solid #f0f0f0 !important;
-    padding: 12px 0 !important;
-    background-color: transparent !important;
-    font-size: 1rem;
-}
-.category-item-style:last-child { border-bottom: none !important; }
-
-.badge-purple-pill {
-    background-color: var(--color-primary-purple) !important;
-    color: white !important;
-    padding: 6px 10px !important;
-    border-radius: 50rem !important;
-    font-weight: 600 !important;
-    min-width: 35px;
+/* Responsive tweaks */
+@media (max-width: 767px) {
+  #map { height: 250px; }
 }
