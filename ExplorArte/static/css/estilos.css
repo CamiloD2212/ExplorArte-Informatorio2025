@@ -179,3 +179,37 @@ a.social-icon:nth-child(3) { background-color: var(--color-blue) !important; }
 @media (max-width: 767px) {
   #map { height: 250px; }
 }
+
+/* --- Mejoras para el CONTACTO --- */
+
+/* Alineación consistente */
+.informacion-contacto {
+    background-color: white !important; 
+    border-radius: 8px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
+    padding: 25px !important;
+}
+
+/* Espacio entre redes del equipo */
+.contacto-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0 !important;
+    border-bottom: 1px solid #eee !important;
+}
+.contacto-item:last-child {
+    border-bottom: none !important;
+}
+
+/* Iconos de redes */
+.social-icon {
+    width: 32px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+    border-radius: 50% !important;
+    display: inline-block;
+    text-align: center;
+    font-size: 1rem !important;
+    color: #fff !important;
+    margin-left: 5px;
+}
