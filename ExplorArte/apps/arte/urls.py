@@ -19,7 +19,12 @@ urlpatterns = [
     path('crear-artista/', views.crear_artista, name='crear_artista'),
     path('crear-categoria/', views.crear_categoria, name='crear_categoria'),
 
+    path('arte/editar/<int:pk>/', views.editar_arte, name='editar_arte'),
+    path('arte/borrar/<int:pk>/', views.borrar_arte, name='borrar_arte'),
+
+
     # # Galería (AJAX)
     # path('upload-imagen/', views.upload_imagen, name='upload_imagen'),
     # path('delete-imagen/', views.delete_imagen, name='delete_imagen'),
+
 ]

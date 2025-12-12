@@ -3,18 +3,38 @@
 
 {% block content %}
 <h3>Listado de obras</h3>
+
 <div class="row">
   {% for arte in artes %}
   <div class="col-md-4 mb-3">
     <div class="card art-card">
-      <img src="{{ arte.url_imagen.url }}" class="card-img-top">
+      <img src="{{ arte.url_imagen.url }}" class="card-img-top" alt="{{ arte.titulo }}">
+
       <div class="card-body">
         <h5>{{ arte.titulo }}</h5>
         <p class="mb-1"><small class="text-muted">{{ arte.artista }}</small></p>
-        <a class="btn btn-sm btn-outline-primary" href="{% url 'arte:detalle_arte' arte.id %}">Ver</a>
+
+        <a class="btn btn-sm btn-outline-primary" 
+           href="{% url 'arte:detalle_arte' arte.id %}">
+            Ver
+        </a>
+
+        {% if puede_editar %}
+            <a href="{% url 'arte:editar_arte' arte.id %}" 
+               class="btn btn-sm btn-warning">Editar</a>
+
+            <a href="{% url 'arte:borrar_arte' arte.id %}" 
+               class="btn btn-sm btn-danger"
+               onclick="return confirm('¿Seguro que deseas borrar este arte?');">
+                Borrar
+            </a>
+        {% endif %}
+
       </div>
     </div>
   </div>
   {% endfor %}
 </div>
+
 {% endblock %}
+s

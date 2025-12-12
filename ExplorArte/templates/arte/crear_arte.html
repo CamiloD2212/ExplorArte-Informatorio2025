@@ -1,12 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Agregar Arte{% endblock %}
+{% block title %}
+    {% if modo == "editar" %}
+        Editar Arte
+    {% else %}
+        Agregar Arte
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 
 <div class="container mt-4">
 
-    <h2 class="mb-3">➕ Agregar Nuevo Arte</h2>
+    <h2 class="mb-3">
+        {% if modo == "editar" %}
+            ✏️ Editar Arte: {{ arte.titulo }}
+        {% else %}
+            ➕ Agregar Nuevo Arte
+        {% endif %}
+    </h2>
     <hr>
 
     {% if form.errors %}
@@ -54,13 +66,18 @@
             {{ form.categoria }}
         </div>
 
-        <!-- SELECCIONAR ARCHIVO MUY SIMPLE -->
         <div class="mb-3">
             {{ form.url_imagen.label_tag }}
             {{ form.url_imagen }}
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+        <button type="submit" class="btn btn-primary w-100">
+            {% if modo == "editar" %}
+                Guardar cambios
+            {% else %}
+                Guardar
+            {% endif %}
+        </button>
     </form>
 </div>
 

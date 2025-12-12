@@ -7,7 +7,9 @@
   <div class="col-md-3">
     <div class="sidebar">
       <h5>Categorías</h5>
+
       <form method="get" id="filtrosForm">
+
         {% for c in categorias %}
           <div class="form-check">
             <input class="form-check-input" type="checkbox"
@@ -66,7 +68,23 @@
             <h5 class="card-title">{{ arte.titulo }}</h5>
             <p class="card-text"><small class="text-muted">{{ arte.artista }}</small></p>
             <p class="card-text"><small class="text-muted">Creada: {{ arte.fecha_creacion }}</small></p>
-            <a href="{% url 'arte:detalle_arte' arte.id %}" class="btn btn-sm btn-outline-primary">Ver</a>
+
+            <a href="{% url 'arte:detalle_arte' arte.id %}" 
+               class="btn btn-sm btn-outline-primary">
+                Ver
+            </a>
+
+            {% if puede_editar %}
+                <a href="{% url 'arte:editar_arte' arte.id %}" 
+                   class="btn btn-sm btn-warning">Editar</a>
+
+                <a href="{% url 'arte:borrar_arte' arte.id %}" 
+                   class="btn btn-sm btn-danger"
+                   onclick="return confirm('¿Seguro que deseas borrar esta obra?');">
+                    Borrar
+                </a>
+            {% endif %}
+
           </div>
         </div>
       </div>
@@ -82,7 +100,7 @@
 
 {% block extra_js %}
 <script>
-  const markersData = `{{ markers|default:"[]"|escapejs }}`;
+  const markersData = `{{ markers|escapejs }}`;
   const markers = JSON.parse(markersData || "[]");
 
   const map = L.map('map').setView([-31.4, -64.2], 12);

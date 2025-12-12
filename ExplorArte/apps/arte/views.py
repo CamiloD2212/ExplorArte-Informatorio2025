@@ -142,6 +142,11 @@ def categorias(request):
                 "lng": coord[1],
             })
 
+    # ✔ AGREGAR ESTO
+    puede_editar = request.user.is_authenticated and (
+        request.user.is_staff or request.user.groups.filter(name="Colaborador").exists()
+    )
+
     return render(request, "categorias.html", {
         "categorias": todas,
         "artes": artes,
@@ -151,6 +156,7 @@ def categorias(request):
         "filtro_artista": filtro_artista,
         "markers": markers,
         "puede_agregar": request.user.is_staff or request.user.groups.filter(name="Colaborador").exists(),
+        "puede_editar": puede_editar,   # ✔ AQUÍ
     })
 
 
@@ -215,3 +221,35 @@ def detalle_arte(request, pk):
     arte = get_object_or_404(Arte.objects.select_related('categoria', 'artista'), pk=pk)
     coord = parse_latlng(arte.ubicacion)
     return render(request, "arte/detalle.html", {"arte": arte, "coord": coord})
+
+
+@login_required
+@user_passes_test(es_admin_o_colaborador)
+def editar_arte(request, pk):
+    arte = get_object_or_404(Arte, pk=pk)
+
+    if request.method == "POST":
+        form = ArteForm(request.POST, request.FILES, instance=arte)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "✔ Arte actualizado correctamente.")
+            return redirect(request.META.get("HTTP_REFERER", "arte:categorias"))
+    else:
+        form = ArteForm(instance=arte)
+
+    return render(request, "arte/crear_arte.html", {
+        "form": form,
+        "arte": arte,
+        "modo": "editar"
+    })
+
+
+@login_required
+@user_passes_test(es_admin_o_colaborador)
+def borrar_arte(request, pk):
+    arte = get_object_or_404(Arte, pk=pk)
+    arte.delete()
+
+    messages.success(request, "🗑️ El artículo se eliminó con éxito.")
+
+    return redirect(request.META.get("HTTP_REFERER", "arte:categorias"))
