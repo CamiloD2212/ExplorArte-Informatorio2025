@@ -1,0 +1,80 @@
+<div class="leaflet-widget-container">
+    <div id="map_{{ widget.name }}" class="leaflet-map"></div>
+
+    <input
+        type="{{ widget.type }}"
+        name="{{ widget.name }}"
+        value="{{ widget.value|stringformat:'s' }}"
+        id="id_{{ widget.name }}"
+        class="leaflet-input"
+    >
+</div>
+
+<style>
+    /* Contenedor del widget en columna */
+    .leaflet-widget-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* espacio entre mapa y input */
+    }
+
+    .leaflet-map {
+        width: 100% !important;
+        height: 400px;
+        min-width: 300px;
+        display: block;
+    }
+
+    /* Evita que Django Admin fuerce layout horizontal */
+    .field-ubicacion .form-row,
+    .field-ubicacion,
+    .form-row,
+    .fieldBox,
+    .aligned {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /* El input ocupa ancho completo */
+    .leaflet-input {
+        width: 100% !important;
+    }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const mapId = "map_{{ widget.name }}";
+    const inputId = "id_{{ widget.name }}";
+    const mapDiv = document.getElementById(mapId);
+
+    const map = L.map(mapId);
+    mapDiv._leaflet_map = map;
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+    }).addTo(map);
+
+    let value = "{{ widget.value|stringformat:'s' }}";
+    let marker;
+
+    if (value && value.includes(",")) {
+        const [lat, lng] = value.split(",").map(Number);
+        const latlng = L.latLng(lat, lng);
+        map.setView(latlng, 15);
+        marker = L.marker(latlng).addTo(map);
+    } else {
+        map.setView([-27.451389, -58.986667], 12);
+    }
+
+    map.on("click", function (e) {
+        if (marker) marker.remove();
+        marker = L.marker(e.latlng).addTo(map);
+        document.getElementById(inputId).value = `${e.latlng.lat},${e.latlng.lng}`;
+
+    });
+
+    setTimeout(() => map.invalidateSize(), 500);
+    window.addEventListener("resize", () => map.invalidateSize());
+});
+</script>
