@@ -12,6 +12,10 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, -apple-system, BlinkMacSystemFont; 
     background-color: var(--color-light-bg) !important; 
+    padding-top: 75px;
+}
+
+.contacto-main, acerca-main {
     padding-top: 0 !important; 
 }
 
@@ -35,6 +39,150 @@ body {
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1) !important; 
     padding: 30px !important; 
     border: none !important;
+}
+
+.navbar {
+    background-color: white !important; /* Fondo blanco, como en el diseño original */
+    border-bottom: 1px solid #f0f0f0; /* Línea de separación sutil */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important; /* Sombra sutil para levantar */
+}
+
+.navbar-brand {
+    font-weight: 700 !important;
+    font-size: 1.2rem;
+    color: var(--color-text-main) !important;
+}
+
+.navbar-nav .nav-link {
+    color: var(--color-text-main) !important;
+    font-weight: 500;
+    transition: color 0.2s;
+    /* Contenedor padre para el pseudoelemento */
+    position: relative; 
+    padding-bottom: 8px !important;
+    padding-top: 8px !important;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/* CREACIÓN DE LA LÍNEA SUBRAYADO */
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0; /* Empieza con ancho cero */
+    height: 2px;
+    bottom: 0;
+    left: 50%; /* Inicialmente centrado */
+    background-color: var(--color-primary-purple); /* Color morado */
+    transition: width 0.3s ease-out, left 0.3s ease-out; /* Animación suave */
+}
+
+/* ESTADO HOVER: La línea se extiende de centro a bordes */
+.navbar-nav .nav-link:hover::after {
+    width: 100%; /* Crece al 100% de ancho */
+    left: 0; /* Se mueve al borde izquierdo */
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:hover {
+    color: var(--color-primary-purple) !important;
+}
+
+/* Asegurar que la línea aparezca por defecto si el enlace está activo */
+.navbar-nav .nav-link.active::after {
+    width: 100%;
+    left: 0;
+}
+
+.navbar-nav .nav-link:hover, 
+.navbar-nav .nav-link.active {
+    color: var(--color-primary-purple) !important;
+}
+
+/* Estilo para los botones de la derecha (Iniciar Sesión/Registrarse) */
+.navbar-nav.ms-auto .nav-link {
+    font-weight: 600 !important;
+}
+.navbar-nav.ms-auto .text-success {
+    color: var(--color-primary-purple) !important; /* Usamos morado para "Registrarse" */
+}
+.navbar-nav.ms-auto .text-success:hover {
+    color: var(--color-dark-purple) !important;
+}
+
+.navbar-nav.ms-auto .text-purple-register {
+    color: var(--color-primary-purple) !important; /* Usamos morado para "Registrarse" */
+}
+.navbar-nav.ms-auto .text-purple-register:hover {
+    color: var(--color-dark-purple) !important;
+}
+
+/* Corrección para centrar los enlaces principales */
+.navbar-collapse #mainNav {
+    display: flex;
+    justify-content: center; /* Centra los elementos dentro de la lista principal */
+    width: 100%; /* Asegura que ocupe todo el espacio disponible */
+}
+
+/* Ajuste para la lista de enlaces principal */
+.navbar-nav.mx-auto {
+    /* Si ya tienes mx-auto, esto ayuda a centrarlo dentro del div flex */
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Evitar que los enlaces de la derecha se muevan demasiado hacia la izquierda */
+.navbar-nav.ms-auto {
+    margin-left: auto !important; 
+}
+
+/* ------------------------------------------- */
+/* 1.6 ESTILOS DE BOTONES AUTENTICACIÓN (Switch Effect) */
+/* ------------------------------------------- */
+
+/* Contenedor Flexbox para los botones de auth */
+.auth-buttons-container {
+    display: flex; /* Asegura que los <li> estén alineados */
+    gap: 5px; /* Pequeño espacio entre los botones */
+    position: relative;
+    padding: 5px 0; /* Relleno para que el fondo morado tenga espacio */
+}
+
+/* Estilo base para ambos enlaces */
+.auth-buttons-container .nav-link {
+    font-weight: 600 !important;
+    display: block;
+    padding: 6px 12px !important;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
+}
+
+/* 1. Estilo inicial (fuera de hover) */
+
+.auth-buttons-container .auth-link-left {
+    color: var(--color-text-main) !important; /* Texto oscuro inicialmente */
+    background-color: transparent;
+}
+.auth-buttons-container .auth-link-right {
+    color: var(--color-primary-purple) !important; /* Texto morado inicialmente */
+    background-color: transparent;
+    border: 1px solid var(--color-primary-purple); /* Borde para el botón de registro */
+}
+
+/* 2. ESTADO HOVER (El corazón del efecto switch) */
+
+/* Cuando haces hover en Iniciar Sesión */
+.auth-buttons-container .auth-link-left:hover {
+    background-color: var(--color-primary-purple) !important; /* Se vuelve morado */
+    color: white !important; /* El texto se vuelve blanco */
+}
+
+/* Cuando haces hover en Registrarse */
+.auth-buttons-container .auth-link-right:hover {
+    background-color: var(--color-primary-purple) !important; /* Se vuelve morado */
+    color: white !important; /* El texto se vuelve blanco */
+    border-color: var(--color-primary-purple) !important; /* Mantiene el borde o lo fusiona */
 }
 
 /* ------------------------------------------- */

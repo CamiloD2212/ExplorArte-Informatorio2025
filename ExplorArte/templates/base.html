@@ -17,7 +17,7 @@
   </head>
   <body>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-none">
       <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="{% url 'arte:index' %}">
           <span class="me-2">🎨</span>
@@ -49,12 +49,18 @@
               </form>
 
             {% else %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link text-success" href="{% url 'register' %}">Registrarse</a>
-                  </li>
+                  <ul class="navbar-nav ms-auto auth-buttons-container">
+  <ul class="navbar-nav ms-auto auth-buttons-container">
+    {% if not user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link auth-link-left" href="{% url 'login' %}">Iniciar sesión</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link auth-link-right" href="{% url 'register' %}">Registrarse</a>
+        </li>
+    {% else %}
+        {% endif %}
+</ul>
             {% endif %}
           </ul>
         </div>
@@ -71,7 +77,8 @@
         {% block content %}{% endblock %}
       </div>
     </main>
-
+    
+<!--Footer-->
     <footer class="footer">
       <div class="container text-center">
         © 2025 ExplorArte - Proyecto Informatorio
