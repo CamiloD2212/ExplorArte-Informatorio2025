@@ -2,35 +2,72 @@
 {% block title %}Acerca - ExplorArte{% endblock %}
 
 {% block content %}
-<div class="row">
-  <div class="col-md-8">
-    <h3>¿Qué es ExplorArte?</h3>
-    <p>ExplorArte es un proyecto del curso Informatorio 2025 para mostrar, documentar y explorar obras artísticas de la ciudad.</p>
-
-    <h4>Equipo</h4>
-    <ul>
-      {% for miembro in equipo %}
-        <li>
-          <strong>{{ miembro.nombre }}</strong>
-          {% if miembro.linkedin %} - <a href="{{ miembro.linkedin }}" target="_blank">LinkedIn</a>{% endif %}
-          {% if miembro.git %} - <a href="{{ miembro.git }}" target="_blank">GitHub</a>{% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="col-md-4">
-    <h4>Estadísticas</h4>
-    <p>Total de obras: <strong>{{ total_artes }}</strong></p>
-
-    <div class="list-group">
-      {% for c in contadores %}
-        <div class="list-group-item d-flex justify-content-between align-items-center">
-          {{ c.categoria__nombre }}
-          <span class="badge bg-primary rounded-pill">{{ c.total }}</span>
+<main class="acerca-main">
+    <header class="contacto-header-bg py-5 mb-5">
+        <div class="container text-center">
+            <h1 class="display-4 text-white font-weight-bold mb-3">Acerca De ExplorArte</h1>
+            <p class="lead text-white-50">Conoce nuestra misión, nuestro equipo y el impacto de nuestro trabajo artístico.</p>
         </div>
-      {% endfor %}
+    </header>
+
+    <div class="container my-5">
+        <div class="row">
+
+            <div class="col-lg-7 mb-5">
+                
+                <section class="card-formulario p-4 p-lg-5 mb-5">
+                    <h2 class="h4 mb-4 font-weight-bold title-acerca-main">¿Qué es ExplorArte?</h2>
+                    <p class="lead text-muted mb-4">ExplorArte es un proyecto del curso Informatorio 2025 para mostrar, documentar y explorar obras artísticas de la ciudad. Nuestro objetivo es servir como un mapa interactivo y un archivo digital accesible para todos los amantes del arte local.</p>
+                    
+                    <h2 class="h4 mb-4 font-weight-bold title-acerca-main">Nuestra Misión</h2>
+                    <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nam ab debitis! Inventore voluptates optio praesentium laborum magni, deserunt perferendis voluptatum officia ab dicta cupiditate numquam libero fugiat iusto vero.</p>
+                </section>
+                
+                <section class="card-formulario p-4 p-lg-5">
+                    <h2 class="h4 mb-4 font-weight-bold title-acerca-main">Equipo Fundador</h2>
+                    
+                    <ul class="equipo-list list-unstyled">
+                        {% for miembro in equipo %}
+                            <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
+                                <span class="member-icon mr-3">👤</span>
+                                <div>
+                                    <strong class="text-dark">{{ miembro.nombre }}</strong>
+                                    <span class="text-muted ml-3">
+                                        {% if miembro.linkedin %}
+                                            <a href="{{ miembro.linkedin }}" target="_blank" class="text-purple-link">LinkedIn</a>
+                                        {% endif %}
+                                        {% if miembro.git %}
+                                            <span class="mx-2">|</span>
+                                            <a href="{{ miembro.git }}" target="_blank" class="text-purple-link">GitHub</a>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            </div>
+
+            <div class="col-lg-5">
+                <section class="card-formulario p-4 p-lg-5">
+                    <h2 class="h4 mb-4 font-weight-bold title-acerca-main">Estadísticas del Proyecto</h2>
+                    
+                    <p class="lead text-muted mb-4">Total de obras documentadas: <strong class="text-purple-total">{{ total_artes }}</strong></p>
+
+                    <h3 class="h5 mb-3 text-dark">Obras por Categoría</h3>
+
+                    <div class="list-group list-group-flush">
+                        {% for c in contadores %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center category-item-style">
+                                {{ c.categoria__nombre }}
+                                <span class="badge badge-purple-pill">{{ c.total }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+
+        </div>
     </div>
-  </div>
-</div>
+</main>
 {% endblock %}

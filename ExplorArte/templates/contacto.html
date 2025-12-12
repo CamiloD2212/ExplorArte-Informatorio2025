@@ -2,27 +2,122 @@
 {% block title %}Contacto - ExplorArte{% endblock %}
 
 {% block content %}
-<h3>Contacto</h3>
+<main class="contacto-main">
+    <header class="contacto-header-bg py-5 mb-5">
+        <div class="container text-center">
+            <h1 class="display-4 text-white font-weight-bold mb-3">Contacto</h1>
+            <p class="lead text-white-50">Nos encantaría saber de ti. Envíanos un mensaje y te responderemos lo antes posible.</p>
+        </div>
+    </header>
 
-<form method="post">
-  {% csrf_token %}
-  <div class="mb-3">
-    <label class="form-label">Nombre</label>
-    <input class="form-control" name="nombre" required>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Email</label>
-    <input class="form-control" type="email" name="email" required>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Asunto</label>
-    <input class="form-control" name="asunto" required>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Mensaje</label>
-    <textarea class="form-control" name="mensaje" rows="4" required></textarea>
-  </div>
+    <div class="container my-5">
+        <div class="row">
 
-  <button class="btn btn-primary" type="submit">Enviar</button>
-</form>
+            <div class="col-lg-5 mb-5">
+                
+                <section class="informacion-contacto card-light-style p-4">
+                    <h2 class="h4 mb-4 title-contacto-left">Información de Contacto</h2>
+                    
+                    <div class="contacto-item d-flex align-items-start mb-3">
+                        <div class="icono-contacto-xl-container mr-3"><i class="icono-contacto-xl">📧</i></div> 
+                        <div class="detalle-contacto">
+                            <p class="mb-0 text-dark font-weight-bold">Email</p>
+                            <p class="mb-0 text-muted">contacto@explorarte.com</p>
+                            <p class="mb-0 text-muted">info@explorarte.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contacto-item d-flex align-items-start mb-3">
+                        <div class="icono-contacto-xl-container mr-3"><i class="icono-contacto-xl">📍</i></div>
+                        <div class="detalle-contacto">
+                            <p class="mb-0 text-dark font-weight-bold">Dirección</p>
+                            <p class="mb-0 text-muted">Calle del Arte, 123</p>
+                            <p class="mb-0 text-muted">28001 Madrid, España</p>
+                        </div>
+                    </div>
+
+                    <div class="contacto-item d-flex align-items-start mb-4">
+                        <div class="icono-contacto-xl-container mr-3"><i class="icono-contacto-xl">📞</i></div>
+                        <div class="detalle-contacto">
+                            <p class="mb-0 text-dark font-weight-bold">Teléfono</p>
+                            <p class="mb-0 text-muted">+34 912 345 678</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <hr class="my-4 hr-contacto">
+
+                <section class="mb-5">
+                    <h3 class="h5 mb-3 title-contacto-left">Síguenos en Redes Sociales</h3>
+                    <div class="d-flex">
+                        <a href="#" class="social-icon mr-3">f</a> 
+                        <a href="#" class="social-icon mr-3">i</a> 
+                        <a href="#" class="social-icon">t</a> 
+                    </div>
+                </section>
+                
+                <div class="row horario-grid">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <section class="horario-atencion-section">
+                            <h3 class="h5 mb-3 title-contacto-left">Horario de Atención</h3>
+                            <div class="horario-detalle">
+                                <p class="mb-1 text-muted">Lunes - Viernes: 9:00 - 18:00</p>
+                                <p class="mb-1 text-muted">Sábados: 10:00 - 14:00</p>
+                                <p class="mb-4 text-muted">Domingos: Cerrado</p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 d-flex align-items-end">
+                        <div class="nota-horario text-left">
+                            <small class="text-secondary">
+                                Normalmente respondemos a todos los mensajes dentro de las 24-48 horas durante días laborables.
+                                <br><br>
+                                Para consultas urgentes, por favor llámanos directamente durante nuestro horario de atención.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-7">
+                <section class="card-formulario p-4 p-lg-5">
+                    <h2 class="h4 mb-4 font-weight-bold">Envíanos un Mensaje</h2>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-row mb-3 custom-form-row">
+                            <div class="col-md-6 form-group">
+                                <label class="form-label-custom">Nombre</label>
+                                <input class="form-control input-custom" name="nombre" placeholder="Tu nombre" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="form-label-custom">Correo Electrónico</label>
+                                <input class="form-control input-custom" type="email" name="email" placeholder="tu@email.com" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <label class="form-label-custom">Asunto</label>
+                            <input class="form-control input-custom" name="asunto" placeholder="¿En qué podemos ayudarte?" required>
+                        </div>
+                        
+                        <div class="mb-4 form-group">
+                            <label class="form-label-custom">Mensaje</label>
+                            <textarea class="form-control input-custom textarea-custom" name="mensaje" rows="6" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                        </div>
+        
+                        <div class="d-flex justify-content-start">
+                            <button class="btn btn-purple btn-lg btn-enviar-custom" type="submit">
+                                <i class="mr-2">✉️</i> Enviar Mensaje
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}
