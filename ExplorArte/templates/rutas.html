@@ -22,6 +22,15 @@
     object-fit: cover;
     border-radius: 6px;
   }
+  
+  .arrow {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 14px solid black;
+  transform-origin: center;
+  }
 </style>
 
 <div class="row">
@@ -46,6 +55,10 @@
     <div class="ruta-info mt-3">
       <h5>{{ selected.nombre }}</h5>
       <p>{{ selected.descripcion }}</p>
+      <p class="mb-0">
+        <strong>Distancia total:</strong>
+        <span id="distancia-total">—</span>
+      </p>
     </div>
     {% endif %}
 
@@ -82,10 +95,6 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- PolylineDecorator COMPATIBLE -->
-<script src="{% static 'leaflet/leaflet.polyline-decorator.min.js' %}"></script>
-
-
 
 <script>
   console.log("---- INICIANDO MAPA ----");
@@ -107,32 +116,69 @@
         <img src="${m.url_imagen}" alt="${m.titulo}" style="width: 100px; height: auto;"/>`);
   });
 
-  // === RECORRIDO + FLECHAS ===
-  if (Array.isArray(recorrido) && recorrido.length > 1) {
+function calcularDistanciaTotal(puntos, map) {
+  let total = 0;
 
-    const poly = L.polyline(recorrido, { color: "blue", weight: 4 }).addTo(map);
-    map.fitBounds(poly.getBounds());
-
-    const decorator = L.polylineDecorator(poly, {
-        patterns: [
-            {
-                offset: 25,
-                repeat: 50,
-                symbol: L.Symbol.arrowHead({
-                    pixelSize: 12,
-                    headAngle: 60,
-                    pathOptions: { fillOpacity: 1, weight: 0 }
-                })
-            }
-        ]
-    }).addTo(map);
-
-
-
-
-  } else if (markers.length > 0) {
-    map.setView([markers[0].lat, markers[0].lng], 15);
+  for (let i = 1; i < puntos.length; i++) {
+    total += map.distance(
+      L.latLng(puntos[i - 1]),
+      L.latLng(puntos[i])
+    );
   }
+
+  return total; // metros
+}
+
+
+  // === RECORRIDO + FLECHAS (SIN DECORATOR) ===
+if (Array.isArray(recorrido) && recorrido.length > 1) {
+
+  const distanciaMetros = calcularDistanciaTotal(recorrido, map);
+const distanciaKm = (distanciaMetros / 1000).toFixed(2);
+
+const distanciaEl = document.getElementById("distancia-total");
+if (distanciaEl) {
+  distanciaEl.textContent = `${distanciaKm} km`;
+}
+
+
+  const poly = L.polyline(recorrido, {
+    color: "magenta",
+    weight: 4
+  }).addTo(map);
+
+  map.fitBounds(poly.getBounds());
+
+  function angleBetween(p1, p2) {
+    return Math.atan2(p2.lng - p1.lng, p2.lat - p1.lat) * 180 / Math.PI;
+  }
+
+  for (let i = 0; i < recorrido.length - 1; i++) {
+    const p1 = L.latLng(recorrido[i]);
+    const p2 = L.latLng(recorrido[i + 1]);
+
+    const angle = angleBetween(p1, p2);
+
+    const arrowIcon = L.divIcon({
+      className: '',
+      html: `<div class="arrow" style="transform: rotate(${angle}deg);"></div>`,
+      iconSize: [14, 14]
+    });
+
+    const midPoint = L.latLng(
+      (p1.lat + p2.lat) / 2,
+      (p1.lng + p2.lng) / 2
+    );
+
+    L.marker(midPoint, {
+      icon: arrowIcon,
+      interactive: false
+    }).addTo(map);
+  }
+
+} else if (markers.length > 0) {
+  map.setView([markers[0].lat, markers[0].lng], 15);
+}
 
 </script>
 
