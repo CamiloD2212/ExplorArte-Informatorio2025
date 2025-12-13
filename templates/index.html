@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - ExplorArte{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <div class="p-4 mb-4 bg-light rounded">
+      <h1>Bienvenido a ExplorArte</h1>
+      <p>Descubrí obras, artistas y rutas artísticas de nuestra ciudad. Explora artículos, mapas y colecciones.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Últimas 3 obras -->
+<div class="row mb-4">
+  <h3 class="mb-3">Últimas obras</h3>
+  {% for arte in ultimas %}
+  <div class="col-md-4">
+    <div class="card art-card">
+      <img src="{{ arte.url_imagen.url }}" class="card-img-top" alt="{{ arte.titulo }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ arte.titulo }}</h5>
+        <p class="card-text"><small class="text-muted">{{ arte.artista }}</small></p>
+        <p class="card-text"><small class="text-muted">Creada: {{ arte.fecha_creacion }}</small></p>
+        <a href="{% url 'arte:detalle_arte' arte.id %}" class="btn btn-sm btn-primary">Ver</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+    <p>No hay obras cargadas.</p>
+  {% endfor %}
+</div>
+
+<!-- MAPA -->
+<div class="row mb-4">
+  <div class="col-12">
+    <h3>Mapa de obras</h3>
+    <div id="map" style="height:400px;"></div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+{{ markers|json_script:"markers-json" }}
+
+<script>
+  const markers = JSON.parse(
+      document.getElementById("markers-json").textContent
+  );
+
+  const map = L.map('map').setView([-27.451389, -58.986667], 12);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+  }).addTo(map);
+
+  markers.forEach(m => {
+      L.marker([m.lat, m.lng]).addTo(map)
+        .bindPopup(`<strong>${m.titulo}</strong>`);
+  });
+</script>
+
+{% endblock %}
