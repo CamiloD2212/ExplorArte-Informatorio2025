@@ -38,6 +38,7 @@ def index(request):
                 "titulo": a.titulo,
                 "lat": coord[0],
                 "lng": coord[1],
+                "url_imagen": a.url_imagen.url if a.url_imagen else "",
             })
 
     context = {
