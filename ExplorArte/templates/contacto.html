@@ -6,22 +6,26 @@
     <header class="contacto-header-bg py-5 mb-5">
         <div class="container text-center">
             <h1 class="display-4 text-white font-weight-bold mb-3">Contacto</h1>
-            <p class="lead text-white">Nos encantaría saber de ti. Envíanos un mensaje y te responderemos lo antes posible.</p>
+            <p class="lead text-white-50">Nos encantaría saber de ti. ¡Estamos atentos a tus mensajes!</p>
         </div>
     </header>
 
     <div class="container my-5">
         <div class="row d-flex justify-content-center">
 
-            <div class="col-lg-8">
-                <section class="card-formulario p-4 p-lg-5 contact-center-card">
+
+            <!-- ===================== -->
+            <!-- COLUMNA DERECHA -->
+            <!-- ===================== -->
+            <div class="col-lg-7">
+                <section class="card-formulario p-4 p-lg-5">
                     <h2 class="h4 mb-4 font-weight-bold">Envíanos un Mensaje</h2>
-                    
+
                     <form method="post">
                         {% csrf_token %}
-                        
-                        <div class="form-row mb-3 custom-form-row row">
-                            <div class="col-md-6 form-group mb-3">
+
+                        <div class="form-row mb-3 custom-form-row">
+                            <div class="col-md-6 form-group">
                                 <label class="form-label-custom">Nombre</label>
                                 <input class="form-control input-custom" name="nombre" placeholder="Tu nombre" required>
                             </div>
@@ -35,21 +39,21 @@
                             <label class="form-label-custom">Asunto</label>
                             <input class="form-control input-custom" name="asunto" placeholder="¿En qué podemos ayudarte?" required>
                         </div>
-                        
+
                         <div class="mb-4 form-group">
                             <label class="form-label-custom">Mensaje</label>
                             <textarea class="form-control input-custom textarea-custom" name="mensaje" rows="6" placeholder="Escribe tu mensaje aquí..." required></textarea>
                         </div>
-        
+
                         <div class="d-flex justify-content-start">
-                            <button class="btn btn-purple btn-lg btn-enviar-custom" type="submit">
-                                <i class="fas fa-paper-plane me-2"></i> Enviar Mensaje
-                            </button>
+                           <button class="btn btn-purple btn-lg btn-enviar-custom" type="submit">
+                               <i class="bi bi-send-fill mr-2"></i>  Enviar Mensaje
+                           </button>
+
                         </div>
                     </form>
                 </section>
             </div>
-            
         </div>
     </div>
 </main>
