@@ -2,98 +2,102 @@
 {% block title %}Categorías - ExplorArte{% endblock %}
 
 {% block content %}
-<div class="row">
+<div class="row mt-4">
 
-  <div class="col-md-3">
-    <div class="sidebar">
-      <h5>Categorías</h5>
-      <form method="get" id="filtrosForm">
-        {% for c in categorias %}
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox"
-                  value="{{ c.id }}" id="cat{{ c.id }}" name="cat"
-                  {% if c.id in seleccionadas %}checked{% endif %}>
-            <label class="form-check-label" for="cat{{ c.id }}">{{ c.nombre }}</label>
-          </div>
-        {% endfor %}
+    <div class="col-md-3">
+        <div class="sidebar p-3 rounded shadow-sm sidebar-custom">
+            <h5 class="text-primary-custom fw-bold pb-2 border-bottom mb-3">Filtros de Búsqueda</h5>
+            <form method="get" id="filtrosForm">
+                <h6 class="fw-semibold">Categorías</h6>
+                {% for c in categorias %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                                value="{{ c.id }}" id="cat{{ c.id }}" name="cat"
+                                {% if c.id in seleccionadas %}checked{% endif %}>
+                        <label class="form-check-label" for="cat{{ c.id }}">{{ c.nombre }}</label>
+                    </div>
+                {% endfor %}
 
-        <hr>
-        <h6>Filtrar por artista</h6>
-        <select class="form-select" name="artista" onchange="document.getElementById('filtrosForm').submit()">
-          <option value="">Todos</option>
-          {% for art in artistas %}
-            <option value="{{ art.id }}" {% if filtro_artista|stringformat:"s" == art.id|stringformat:"s" %}selected{% endif %}>
-              {{ art.nombre }} {{ art.apellido }}
-            </option>
-          {% endfor %}
-        </select>
+                <hr>
+                <h6 class="fw-semibold">Filtrar por artista</h6>
+                <select class="form-select form-select-custom" name="artista" onchange="document.getElementById('filtrosForm').submit()">
+                    <option value="">Todos</option>
+                    {% for art in artistas %}
+                        <option value="{{ art.id }}" {% if filtro_artista|stringformat:"s" == art.id|stringformat:"s" %}selected{% endif %}>
+                            {{ art.nombre }} {{ art.apellido }}
+                        </option>
+                    {% endfor %}
+                </select>
 
-        <hr>
-        <h6>Orden</h6>
-        <select class="form-select" name="orden" onchange="document.getElementById('filtrosForm').submit()">
-          <option value="recientes" {% if orden == 'recientes' %}selected{% endif %}>Más recientes</option>
-          <option value="antiguos" {% if orden == 'antiguos' %}selected{% endif %}>Más antiguos</option>
-          <option value="az" {% if orden == 'az' %}selected{% endif %}>A - Z</option>
-          <option value="za" {% if orden == 'za' %}selected{% endif %}>Z - A</option>
-        </select>
+                <hr>
+                <h6 class="fw-semibold">Orden</h6>
+                <select class="form-select form-select-custom" name="orden" onchange="document.getElementById('filtrosForm').submit()">
+                    <option value="recientes" {% if orden == 'recientes' %}selected{% endif %}>Más recientes</option>
+                    <option value="antiguos" {% if orden == 'antiguos' %}selected{% endif %}>Más antiguos</option>
+                    <option value="az" {% if orden == 'az' %}selected{% endif %}>A - Z</option>
+                    <option value="za" {% if orden == 'za' %}selected{% endif %}>Z - A</option>
+                </select>
 
-        <div class="mt-3 d-grid">
-          <button class="btn btn-primary" type="submit">Aplicar filtros</button>
+                <div class="mt-3 d-grid">
+                    <button class="btn btn-primary-custom" type="submit">Aplicar filtros</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+            <h4 class="fw-bold text-dark">Explorador de Obras</h4>
+
+            {% if puede_agregar %}
+                <a href="{% url 'arte:crear_arte' %}" class="btn btn-primary-custom btn-lg shadow-sm">
+                    <i class="fas fa-plus text-white me-2"></i> Agregar Artículo
+                </a>
+            {% endif %}
         </div>
 
-      </form>
-    </div>
-  </div>
+        <p class="text-muted">Mostrando {{ artes.count }} obras</p>
 
-  <div class="col-md-9">
-
-    <div class="d-flex justify-content-between align-items-center">
-      <h4>Explorador de Categorías</h4>
-
-      {% if puede_agregar %}
-        <a href="{% url 'arte:crear_arte' %}" class="btn btn-success">➕ Agregar Artículo</a>
-      {% endif %}
-    </div>
-
-    <p>Mostrando {{ artes.count }} obras</p>
-
-    <div class="row">
-      {% for arte in artes %}
-      <div class="col-md-4 mb-3">
-        <div class="card art-card">
-          <img src="{{ arte.url_imagen.url }}" class="card-img-top" alt="{{ arte.titulo }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ arte.titulo }}</h5>
-            <p class="card-text"><small class="text-muted">{{ arte.artista }}</small></p>
-            <p class="card-text"><small class="text-muted">Creada: {{ arte.fecha_creacion }}</small></p>
-            <a href="{% url 'arte:detalle_arte' arte.id %}" class="btn btn-sm btn-outline-primary">Ver</a>
-          </div>
+        <div class="row">
+            {% for arte in artes %}
+            <div class="col-md-4 mb-4">
+                <div class="card art-card h-100 shadow-sm border-0">
+                    <img src="{{ arte.url_imagen.url }}" class="card-img-top object-fit-cover" alt="{{ arte.titulo }}" style="height: 200px;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-semibold">{{ arte.titulo }}</h5>
+                        <p class="card-text text-muted mb-1"><small>Artista: {{ arte.artista }}</small></p>
+                        <p class="card-text text-muted mb-3"><small>Creada: {{ arte.fecha_creacion }}</small></p>
+                        <a href="{% url 'arte:detalle_arte' arte.id %}" class="btn btn-sm btn-outline-primary-custom mt-auto">Ver Detalle</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-      </div>
-      {% endfor %}
+
+        <h5 class="mt-4 fw-bold text-primary-custom">Ubicación en el Mapa</h5>
+        <div id="map" style="height:350px" class="rounded shadow-sm"></div>
+
     </div>
-
-    <h5 class="mt-4">Mapa</h5>
-    <div id="map" style="height:300px"></div>
-
-  </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-  const markersData = `{{ markers|default:"[]"|escapejs }}`;
-  const markers = JSON.parse(markersData || "[]");
+    // Se asume que markersData y el uso de Leaflet (L) son correctos
+    const markersData = `{{ markers|default:"[]"|escapejs }}`;
+    const markers = JSON.parse(markersData || "[]");
 
-  const map = L.map('map').setView([-31.4, -64.2], 12);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-  }).addTo(map);
+    const map = L.map('map').setView([-31.4, -64.2], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
 
-  markers.forEach(function(m) {
-    if (m.lat && m.lng) {
-      L.marker([m.lat, m.lng]).addTo(map).bindPopup(m.titulo);
-    }
-  });
+    markers.forEach(function(m) {
+        if (m.lat && m.lng) {
+            L.marker([m.lat, m.lng]).addTo(map).bindPopup(m.titulo);
+        }
+    });
 </script>
 {% endblock %}

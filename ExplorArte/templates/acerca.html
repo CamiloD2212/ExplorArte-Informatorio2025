@@ -6,7 +6,7 @@
     <header class="contacto-header-bg py-5 mb-5">
         <div class="container text-center">
             <h1 class="display-4 text-white font-weight-bold mb-3">Acerca De ExplorArte</h1>
-            <p class="lead text-white-50">Conoce nuestra misión, nuestro equipo y el impacto de nuestro trabajo artístico.</p>
+            <p class="lead text-white">Conoce nuestra misión, nuestro equipo y el impacto de nuestro trabajo artístico.</p>
         </div>
     </header>
 
@@ -20,30 +20,67 @@
                     <p class="lead text-muted mb-4">ExplorArte es un proyecto del curso Informatorio 2025 para mostrar, documentar y explorar obras artísticas de la ciudad. Nuestro objetivo es servir como un mapa interactivo y un archivo digital accesible para todos los amantes del arte local.</p>
                     
                     <h2 class="h4 mb-4 font-weight-bold title-acerca-main">Nuestra Misión</h2>
-                    <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Et nam ab debitis! Inventore voluptates optio praesentium laborum magni, deserunt perferendis voluptatum officia ab dicta cupiditate numquam libero fugiat iusto vero.</p>
+                    <p class="lead text-muted">ExplorArte busca ser el <b>archivo digital</b> y el <b>mapa interactivo</b> de referencia para el
+                    arte local. Queremos que cualquier persona, desde el habitante de toda la vida hasta el visitante curioso, pueda:
+                    
+                    <br><br>
+                    
+                    <ol class="list-unstyled lead text-muted px-3 mt-3">
+                        <li class="mb-2">1. <b>Descubrir</b> nuevas obras de arte cerca de su ubicación.</li>
+                        <li class="mb-2">2. <b>Aprender</b> sobre el artista, la historia y el significado detrás de cada pieza.</li>
+                        <li class="mb-2">3. <b>Acceder</b> fácilmente a la documentación fotográfica y textual de cada obra.</li>
+                    </ol>
+
+                    Buscamos crear una plataforma <b>accesible para todos los amantes del arte local</b>,
+                    sirviendo como un valioso recurso educativo y cultural que promueve la aprecación
+                    de la belleza y la creatividad que nos rodea.</p>
                 </section>
                 
                 <section class="card-formulario p-4 p-lg-5">
                     <h2 class="h4 mb-4 font-weight-bold title-acerca-main">Equipo Fundador</h2>
                     
                     <ul class="equipo-list list-unstyled">
-                        {% for miembro in equipo %}
-                            <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
-                                <span class="member-icon mr-3">👤</span>
-                                <div>
-                                    <strong class="text-dark">{{ miembro.nombre }}</strong>
-                                    <span class="text-muted ml-3">
-                                        {% if miembro.linkedin %}
-                                            <a href="{{ miembro.linkedin }}" target="_blank" class="text-purple-link">LinkedIn</a>
-                                        {% endif %}
-                                        {% if miembro.git %}
-                                            <span class="mx-2">|</span>
-                                            <a href="{{ miembro.git }}" target="_blank" class="text-purple-link">GitHub</a>
-                                        {% endif %}
-                                    </span>
-                                </div>
-                            </li>
-                        {% endfor %}
+                        
+                        <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
+                            <span class="member-icon mr-3">👤</span>
+                            <div>
+                                <strong class="text-dark">Desza Camilo</strong>
+                                <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
+                                <span class="text-muted mx-1">|</span>
+                                <a href="#" target="_blank" class="text-purple-link">GitHub</a>
+                            </div>
+                        </li>
+                        
+                        <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
+                            <span class="member-icon mr-3">👤</span>
+                            <div>
+                                <strong class="text-dark">Obando Gabriel</strong>
+                                <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
+                                <span class="text-muted mx-1">|</span>
+                                <a href="#" target="_blank" class="text-purple-link">GitHub</a>
+                            </div>
+                        </li>
+                        
+                        <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
+                            <span class="member-icon mr-3">👤</span>
+                            <div>
+                                <strong class="text-dark">Feldmann Axel</strong>
+                                <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
+                                <span class="text-muted mx-1">|</span>
+                                <a href="#" target="_blank" class="text-purple-link">GitHub</a>
+                            </div>
+                        </li>
+
+                        <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
+                            <span class="member-icon mr-3">👤</span>
+                            <div>
+                                <strong class="text-dark">Cardozo Diego</strong>
+                                <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
+                                <span class="text-muted mx-1">|</span>
+                                <a href="#" target="_blank" class="text-purple-link">GitHub</a>
+                            </div>
+                        </li>
+
                     </ul>
                 </section>
             </div>
