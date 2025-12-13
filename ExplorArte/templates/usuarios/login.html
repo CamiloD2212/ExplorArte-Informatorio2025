@@ -1,30 +1,49 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Iniciar sesión{% endblock %}
+{% block title %}Iniciar sesión - ExplorArte{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-4">
+<div class="row justify-content-center my-5">
+    <div class="col-md-5 col-lg-4">
 
-        <h3 class="text-center mb-4">Iniciar Sesión</h3>
+        <div class="card p-4 shadow-lg border-0 login-card">
+            
+            <h3 class="text-center mb-4 fw-bold text-primary-custom">
+                <i class="fas fa-lock me-2"></i> Iniciar Sesión
+            </h3>
 
-        <form method="post">
-            {% csrf_token %}
+            <form method="post">
+                {% csrf_token %}
 
-            <div class="mb-3">
-                <label class="form-label">Usuario</label>
-                <input type="text" name="username" class="form-control" required autofocus>
-            </div>
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        Tu nombre de usuario y/o contraseña no coinciden. Por favor, intenta de nuevo.
+                    </div>
+                {% endif %}
 
-            <div class="mb-3">
-                <label class="form-label">Contraseña</label>
-                <input type="password" name="password" class="form-control" required>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Usuario</label>
+                    <input type="text" name="username" class="form-control form-control-custom" required autofocus>
+                </div>
 
-            <button type="submit" class="btn btn-primary w-100">Ingresar</button>
-        </form>
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Contraseña</label>
+                    <input type="password" name="password" class="form-control form-control-custom" required>
+                </div>
 
+                <button type="submit" class="btn btn-primary-custom btn-lg w-100 mb-3">
+                    Ingresar
+                </button>
+                
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        ¿Olvidaste tu contraseña? <a href="#" class="text-primary-custom">Recuperar</a>
+                    </small>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
 {% endblock %}

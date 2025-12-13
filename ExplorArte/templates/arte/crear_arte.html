@@ -9,76 +9,171 @@
 {% endblock %}
 
 {% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-lg-8 col-xl-6">
 
-<div class="container mt-4">
-
-    <h2 class="mb-3">
-        {% if modo == "editar" %}
-            ✏️ Editar Arte: {{ arte.titulo }}
-        {% else %}
-            ➕ Agregar Nuevo Arte
-        {% endif %}
-    </h2>
-    <hr>
-
-    {% if form.errors %}
-        <div class="alert alert-danger">
-            <strong>Corrige los siguientes errores:</strong>
-            {{ form.errors }}
-        </div>
-    {% endif %}
-
-    <form method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
-        {% csrf_token %}
-
-        <div class="mb-3">
-            {{ form.titulo.label_tag }}
-            {{ form.titulo }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.descripcion.label_tag }}
-            {{ form.descripcion }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.fecha_creacion.label_tag }}
-            {{ form.fecha_creacion }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.direccion.label_tag }}
-            {{ form.direccion }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.ubicacion.label_tag }}
-            {{ form.ubicacion }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.artista.label_tag }}
-            {{ form.artista }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.categoria.label_tag }}
-            {{ form.categoria }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.url_imagen.label_tag }}
-            {{ form.url_imagen }}
-        </div>
-
-        <button type="submit" class="btn btn-primary w-100">
+        <h2 class="mb-3">
             {% if modo == "editar" %}
-                Guardar cambios
+                ✏️ Editar Arte: {{ arte.titulo }}
             {% else %}
-                Guardar
+                ➕ Agregar Nuevo Arte
             {% endif %}
-        </button>
-    </form>
+        </h2>
+        <hr>
+
+        {% if form.errors %}
+            <div class="alert alert-danger shadow-sm mb-4">
+                <strong>Corrige los siguientes errores:</strong>
+                {{ form.errors }}
+            </div>
+        {% endif %}
+
+        <form method="post"
+              enctype="multipart/form-data"
+              class="card p-4 p-md-5 shadow-lg border-0 sidebar-custom">
+            {% csrf_token %}
+
+            {% for field in form %}
+                {% if field.name == "categoria" %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Categoría</label>
+
+                        <div class="d-flex gap-2">
+                            {{ field }}
+                            <button type="button"
+                                    class="btn btn-outline-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalCategoria">
+                                +
+                            </button>
+                        </div>
+
+                        {% if field.errors %}
+                            <div class="text-danger small">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                {% elif field.name == "artista" %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Artista</label>
+
+                        <div class="d-flex gap-2">
+                            {{ field }}
+                            <button type="button"
+                                    class="btn btn-outline-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalArtista">
+                                +
+                            </button>
+                        </div>
+
+                        {% if field.errors %}
+                            <div class="text-danger small">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                {% else %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <div class="form-text">{{ field.help_text }}</div>
+                        {% endif %}
+
+                        {% if field.errors %}
+                            <div class="text-danger small">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary w-100">
+                {% if modo == "editar" %}
+                    Guardar cambios
+                {% else %}
+                    Guardar
+                {% endif %}
+            </button>
+        </form>
+
+    </div>
 </div>
 
+<!-- ================= MODAL NUEVA CATEGORÍA ================= -->
+<div class="modal fade" id="modalCategoria" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post"
+              action="{% url 'arte:crear_categoria' %}"
+              class="modal-content">
+            {% csrf_token %}
+
+            <div class="modal-header">
+                <h5 class="modal-title">Nueva Categoría</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <label class="form-label">Nombre</label>
+                <input type="text"
+                       name="nombre"
+                       class="form-control"
+                       required>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ================= MODAL NUEVO ARTISTA ================= -->
+<div class="modal fade" id="modalArtista" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post"
+              action="{% url 'arte:crear_artista' %}"
+              class="modal-content">
+            {% csrf_token %}
+
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo Artista</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="mb-2">
+                    <label class="form-label">Nombre</label>
+                    <input type="text"
+                           name="nombre"
+                           class="form-control"
+                           required>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label">Apellido</label>
+                    <input type="text"
+                           name="apellido"
+                           class="form-control"
+                           required>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

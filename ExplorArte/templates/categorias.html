@@ -2,97 +2,97 @@
 {% block title %}Categorías - ExplorArte{% endblock %}
 
 {% block content %}
-<div class="row">
+<div class="row mt-4">
 
+  <!-- SIDEBAR -->
   <div class="col-md-3">
-    <div class="sidebar">
-      <h5>Categorías</h5>
+    <div class="sidebar p-3 rounded shadow-sm sidebar-custom">
+      <h5 class="fw-bold pb-2 border-bottom mb-3">Filtros de Búsqueda</h5>
 
       <form method="get" id="filtrosForm">
-
+        <h6>Categorías</h6>
         {% for c in categorias %}
           <div class="form-check">
-            <input class="form-check-input" type="checkbox"
-                   value="{{ c.id }}" id="cat{{ c.id }}" name="cat"
+            <input class="form-check-input"
+                   type="checkbox"
+                   value="{{ c.id }}"
+                   name="cat"
+                   onchange="this.form.submit()"
                    {% if c.id in seleccionadas %}checked{% endif %}>
-            <label class="form-check-label" for="cat{{ c.id }}">{{ c.nombre }}</label>
+            <label class="form-check-label">{{ c.nombre }}</label>
           </div>
         {% endfor %}
 
         <hr>
-        <h6>Filtrar por artista</h6>
-        <select class="form-select" name="artista" onchange="document.getElementById('filtrosForm').submit()">
+
+        <h6>Artista</h6>
+        <select class="form-select" name="artista" onchange="this.form.submit()">
           <option value="">Todos</option>
           {% for art in artistas %}
-            <option value="{{ art.id }}" {% if filtro_artista|stringformat:"s" == art.id|stringformat:"s" %}selected{% endif %}>
+            <option value="{{ art.id }}"
+              {% if filtro_artista|stringformat:"s" == art.id|stringformat:"s" %}selected{% endif %}>
               {{ art.nombre }} {{ art.apellido }}
             </option>
           {% endfor %}
         </select>
 
         <hr>
+
         <h6>Orden</h6>
-        <select class="form-select" name="orden" onchange="document.getElementById('filtrosForm').submit()">
+        <select class="form-select" name="orden" onchange="this.form.submit()">
           <option value="recientes" {% if orden == 'recientes' %}selected{% endif %}>Más recientes</option>
           <option value="antiguos" {% if orden == 'antiguos' %}selected{% endif %}>Más antiguos</option>
           <option value="az" {% if orden == 'az' %}selected{% endif %}>A - Z</option>
           <option value="za" {% if orden == 'za' %}selected{% endif %}>Z - A</option>
         </select>
-
-        <div class="mt-3 d-grid">
-          <button class="btn btn-primary" type="submit">Aplicar filtros</button>
-        </div>
-
       </form>
     </div>
   </div>
 
+  <!-- CONTENIDO -->
   <div class="col-md-9">
 
-    <div class="d-flex justify-content-between align-items-center">
-      <h4>Explorador de Categorías</h4>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4>Explorador de Obras</h4>
 
       {% if puede_agregar %}
-        <a href="{% url 'arte:crear_arte' %}" class="btn btn-success">➕ Agregar Artículo</a>
+        <a href="{% url 'arte:crear_arte' %}" class="btn btn-primary">
+          ➕ Agregar Artículo
+        </a>
       {% endif %}
     </div>
 
-    <p>Mostrando {{ artes.count }} obras</p>
+    <p class="text-muted">Mostrando {{ artes.count }} obras</p>
 
     <div class="row">
       {% for arte in artes %}
-      <div class="col-md-4 mb-3">
-        <div class="card art-card">
-          <img src="{{ arte.url_imagen.url }}" class="card-img-top" alt="{{ arte.titulo }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ arte.titulo }}</h5>
-            <p class="card-text"><small class="text-muted">{{ arte.artista }}</small></p>
-            <p class="card-text"><small class="text-muted">Creada: {{ arte.fecha_creacion }}</small></p>
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <img src="{{ arte.url_imagen.url }}" class="card-img-top" alt="{{ arte.titulo }}">
+            <div class="card-body">
+              <h5>{{ arte.titulo }}</h5>
+              <p class="text-muted">{{ arte.artista }}</p>
 
-            <a href="{% url 'arte:detalle_arte' arte.id %}" 
-               class="btn btn-sm btn-outline-primary">
-                Ver
-            </a>
+              <a href="{% url 'arte:detalle_arte' arte.id %}" class="btn btn-sm btn-outline-primary">Ver</a>
 
-            {% if puede_editar %}
-                <a href="{% url 'arte:editar_arte' arte.id %}" 
-                   class="btn btn-sm btn-warning">Editar</a>
-
-                <a href="{% url 'arte:borrar_arte' arte.id %}" 
+              {% if puede_editar %}
+                <a href="{% url 'arte:editar_arte' arte.id %}" class="btn btn-sm btn-warning">Editar</a>
+                <a href="{% url 'arte:borrar_arte' arte.id %}"
                    class="btn btn-sm btn-danger"
-                   onclick="return confirm('¿Seguro que deseas borrar esta obra?');">
-                    Borrar
+                   onclick="return confirm('¿Seguro?');">
+                   Borrar
                 </a>
-            {% endif %}
-
+              {% endif %}
+            </div>
           </div>
         </div>
-      </div>
+      {% empty %}
+        <p>No hay obras para mostrar.</p>
       {% endfor %}
     </div>
 
-    <h5 class="mt-4">Mapa</h5>
-    <div id="map" style="height:300px"></div>
+    <h5 class="mt-4">Ubicación en el mapa</h5>
+    <div id="map" style="height:350px"></div>
 
   </div>
 </div>
@@ -100,15 +100,12 @@
 
 {% block extra_js %}
 <script>
-  const markersData = `{{ markers|escapejs }}`;
-  const markers = JSON.parse(markersData || "[]");
+  const markers = JSON.parse(`{{ markers|escapejs }}` || "[]");
 
   const map = L.map('map').setView([-31.4, -64.2], 12);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-  }).addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-  markers.forEach(function(m) {
+  markers.forEach(m => {
     if (m.lat && m.lng) {
       L.marker([m.lat, m.lng]).addTo(map).bindPopup(m.titulo);
     }

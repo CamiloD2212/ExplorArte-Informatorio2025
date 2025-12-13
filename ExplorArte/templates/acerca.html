@@ -2,35 +2,109 @@
 {% block title %}Acerca - ExplorArte{% endblock %}
 
 {% block content %}
-<div class="row">
-  <div class="col-md-8">
-    <h3>¿Qué es ExplorArte?</h3>
-    <p>ExplorArte es un proyecto del curso Informatorio 2025 para mostrar, documentar y explorar obras artísticas de la ciudad.</p>
-
-    <h4>Equipo</h4>
-    <ul>
-      {% for miembro in equipo %}
-        <li>
-          <strong>{{ miembro.nombre }}</strong>
-          {% if miembro.linkedin %} - <a href="{{ miembro.linkedin }}" target="_blank">LinkedIn</a>{% endif %}
-          {% if miembro.git %} - <a href="{{ miembro.git }}" target="_blank">GitHub</a>{% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="col-md-4">
-    <h4>Estadísticas</h4>
-    <p>Total de obras: <strong>{{ total_artes }}</strong></p>
-
-    <div class="list-group">
-      {% for c in contadores %}
-        <div class="list-group-item d-flex justify-content-between align-items-center">
-          {{ c.categoria__nombre }}
-          <span class="badge bg-primary rounded-pill">{{ c.total }}</span>
+<main class="acerca-main">
+    <header class="contacto-header-bg py-5 mb-5">
+        <div class="container text-center">
+            <h1 class="display-4 text-white font-weight-bold mb-3">Acerca De ExplorArte</h1>
+            <p class="lead text-white">Conoce nuestra misión, nuestro equipo y el impacto de nuestro trabajo artístico.</p>
         </div>
-      {% endfor %}
+    </header>
+
+    <div class="container my-5">
+        <div class="row">
+
+            <div class="col-lg-7 mb-5">
+                
+                <section class="card-formulario p-4 p-lg-5 mb-5">
+                    <h2 class="h4 mb-4 font-weight-bold title-acerca-main">¿Qué es ExplorArte?</h2>
+                    <p class="text-dark mb-4 acerca-text-unified">ExplorArte es un proyecto del curso Informatorio 2025 para mostrar, documentar y explorar obras artísticas de la ciudad. Nuestro objetivo es servir como un mapa interactivo y un archivo digital accesible para todos los amantes del arte local.</p>
+                    
+                    <h2 class="h4 mb-4 font-weight-bold title-acerca-main">Nuestra Misión</h2>
+                    <p class="text-dark acerca-text-unified">ExplorArte busca ser el <b>archivo digital</b> y el <b>mapa interactivo</b> de referencia para el
+                    arte local. Queremos que cualquier persona, desde el habitante de toda la vida hasta el visitante curioso, pueda:
+                    
+                    <br><br>
+                    
+                    <ol class="list-unstyled text-dark px-3 mt-3">
+                        <li class="mb-2">1. <b>Descubrir</b> nuevas obras de arte cerca de su ubicación.</li>
+                        <li class="mb-2">2. <b>Aprender</b> sobre el artista, la historia y el significado detrás de cada pieza.</li>
+                        <li class="mb-2">3. <b>Acceder</b> fácilmente a la documentación fotográfica y textual de cada obra.</li>
+                    </ol>
+
+                    Buscamos crear una plataforma <b>accesible para todos los amantes del arte local</b>,
+                    sirviendo como un valioso recurso educativo y cultural que promueve la aprecación
+                    de la belleza y la creatividad que nos rodea.</p>
+                </section>
+                
+                <section class="card-formulario p-4 p-lg-5">
+                    <h2 class="h4 mb-4 font-weight-bold title-acerca-main">Equipo Fundador</h2>
+                    
+                    <ul class="equipo-list list-unstyled">
+                        
+                        <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
+                            <span class="member-icon mr-3">👤</span>
+                            <div>
+                                <strong class="text-dark acerca-strong-unified">Desza Camilo</strong>
+                                <a href="https://www.linkedin.com/in/camilo-desza-3a312b305/" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
+                                <span class="text-muted mx-1">|</span>
+                                <a href="https://github.com/CamiloD2212" target="_blank" class="text-purple-link">GitHub</a>
+                            </div>
+                        </li>
+                        
+                        <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
+                            <span class="member-icon mr-3">👤</span>
+                            <div>
+                                <strong class="text-dark acerca-strong-unified">Obando Gabriel</strong>
+                                <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
+                                <span class="text-muted mx-1">|</span>
+                                <a href="#" target="_blank" class="text-purple-link">GitHub</a>
+                            </div>
+                        </li>
+                        
+                        <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
+                            <span class="member-icon mr-3">👤</span>
+                            <div>
+                                <strong class="text-dark acerca-strong-unified">Feldmann Axel</strong>
+                                <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
+                                <span class="text-muted mx-1">|</span>
+                                <a href="#" target="_blank" class="text-purple-link">GitHub</a>
+                            </div>
+                        </li>
+
+                        <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
+                            <span class="member-icon mr-3">👤</span>
+                            <div>
+                                <strong class="text-dark acerca-strong-unified">Cardozo Diego</strong>
+                                <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
+                                <span class="text-muted mx-1">|</span>
+                                <a href="#" target="_blank" class="text-purple-link">GitHub</a>
+                            </div>
+                        </li>
+
+                    </ul>
+                </section>
+            </div>
+
+            <div class="col-lg-5">
+                <section class="card-formulario p-4 p-lg-5">
+                    <h2 class="h4 mb-4 font-weight-bold title-acerca-main">Estadísticas del Proyecto</h2>
+                    
+                    <p class="text-dark mb-4 acerca-text-unified">Total de obras documentadas: <strong class="text-purple-total acerca-strong-unified">{{ total_artes }}</strong></p>
+
+                    <h3 class="h5 mb-3 text-dark">Obras por Categoría</h3>
+
+                    <div class="list-group list-group-flush">
+                        {% for c in contadores %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center category-item-style">
+                                <span class="acerca-text-unified">{{ c.categoria__nombre }}</span>
+                                <span class="badge badge-purple-pill acerca-strong-unified">{{ c.total }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+
+        </div>
     </div>
-  </div>
-</div>
+</main>
 {% endblock %}
