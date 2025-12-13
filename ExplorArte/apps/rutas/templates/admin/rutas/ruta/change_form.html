@@ -1,0 +1,174 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+{% load json_script %}
+
+{% block extrahead %}
+{{ block.super }}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<style>
+    #map {
+        height: 500px;
+        border: 2px solid #666;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .btn-map {
+        padding: 8px 14px;
+        border-radius: 5px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    #btn-undo {
+        background: #4CAF50;
+        color: white;
+    }
+    #btn-clear {
+        background: #e53935;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block after_related_objects %}
+{{ block.super }}
+
+<h2>Mapa de la Ruta</h2>
+
+<div id="map"></div>
+
+<button type="button" id="btn-undo" class="btn-map">⟲ Borrar último punto</button>
+<button type="button" id="btn-clear" class="btn-map">🗑 Borrar ruta completa</button>
+
+<!-- JSON seguro desde Django -->
+{{ recorrido_json|default:list|json_script:"recorrido-data" }}
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+function iniciarMapa(inputRecorrido) {
+
+    const mapDiv = document.getElementById("map");
+    if (mapDiv._leaflet_id) {
+        mapDiv._leaflet_id = null;
+    }
+
+    const map = L.map("map").setView([-27.451389, -58.986667], 12);
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19
+    }).addTo(map);
+
+    let puntos = [];
+    let marcadores = [];
+    let polylinea = null;
+
+    // ===============================
+    // Cargar puntos desde Django
+    // ===============================
+    const pts = JSON.parse(
+        document.getElementById("recorrido-data").textContent
+    );
+
+    if (Array.isArray(pts)) {
+        puntos = pts;
+
+        puntos.forEach(p => {
+            const m = L.marker([p[0], p[1]]).addTo(map);
+            marcadores.push(m);
+        });
+
+        if (puntos.length >= 2) {
+            polylinea = L.polyline(puntos, { color: "blue" }).addTo(map);
+            map.fitBounds(polylinea.getBounds());
+        }
+    }
+
+    function actualizarMapa() {
+
+        if (polylinea) {
+            map.removeLayer(polylinea);
+        }
+
+        if (puntos.length >= 2) {
+            polylinea = L.polyline(puntos, { color: "blue" }).addTo(map);
+        }
+
+        inputRecorrido.value = JSON.stringify(puntos);
+
+        const inicioLat = document.getElementById("id_inicio_lat");
+        const inicioLng = document.getElementById("id_inicio_lng");
+        const finLat = document.getElementById("id_fin_lat");
+        const finLng = document.getElementById("id_fin_lng");
+
+        if (puntos.length >= 1) {
+            inicioLat.value = puntos[0][0];
+            inicioLng.value = puntos[0][1];
+        } else {
+            inicioLat.value = "";
+            inicioLng.value = "";
+        }
+
+        if (puntos.length >= 2) {
+            const last = puntos[puntos.length - 1];
+            finLat.value = last[0];
+            finLng.value = last[1];
+        } else {
+            finLat.value = "";
+            finLng.value = "";
+        }
+    }
+
+    map.on("click", function (e) {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+
+        puntos.push([lat, lng]);
+
+        const m = L.marker([lat, lng]).addTo(map);
+        marcadores.push(m);
+
+        actualizarMapa();
+    });
+
+    document.getElementById("btn-undo").addEventListener("click", function () {
+        if (puntos.length === 0) return;
+
+        puntos.pop();
+        const m = marcadores.pop();
+        map.removeLayer(m);
+
+        actualizarMapa();
+    });
+
+    document.getElementById("btn-clear").addEventListener("click", function () {
+
+        puntos = [];
+
+        marcadores.forEach(m => map.removeLayer(m));
+        marcadores = [];
+
+        if (polylinea) {
+            map.removeLayer(polylinea);
+            polylinea = null;
+        }
+
+        inputRecorrido.value = "[]";
+
+        document.getElementById("id_inicio_lat").value = "";
+        document.getElementById("id_inicio_lng").value = "";
+        document.getElementById("id_fin_lat").value = "";
+        document.getElementById("id_fin_lng").value = "";
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("id_recorrido");
+    if (input) {
+        iniciarMapa(input);
+    }
+});
+</script>
+
+{% endblock %}
