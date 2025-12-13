@@ -153,6 +153,7 @@ body {
 
 /* Estilos para los campos de formulario de filtros, comentarios y login */
 .form-control-custom {
+    /* Aquí se define la apariencia por defecto y el hover/focus */
     border-color: #ddd;
     box-shadow: none !important;
     transition: border-color 0.2s, box-shadow 0.2s;

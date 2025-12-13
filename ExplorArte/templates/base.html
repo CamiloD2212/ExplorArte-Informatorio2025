@@ -33,7 +33,7 @@
                 <li class="nav-item"><a class="nav-link text-white nav-link-custom" href="{% url 'arte:index' %}">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link text-white nav-link-custom" href="{% url 'arte:categorias' %}">Categorías</a></li>
                 <li class="nav-item"><a class="nav-link text-white nav-link-custom" href="{% url 'arte:rutas' %}">Rutas</a></li>
-                <li class="nav-item"><a class="nav-link text-white nav-link-custom" href="{% url 'arte:acerca' %}">Acerca</a></li>
+                <li class="nav-item"><a class="nav-link text-white nav-link-custom" href="{% url 'arte:acerca' %}">Acerca de</a></li>
                 <li class="nav-item"><a class="nav-link text-white nav-link-custom" href="{% url 'arte:contacto' %}">Contacto</a></li>
             </ul>
             
@@ -76,7 +76,7 @@
 </main>
     
 <!--Footer-->
-  <footer class="footer-light-purple-custom text-white pt-5 pb-3 mt-5 shadow-lg">
+<footer class="footer-light-purple-custom text-white pt-5 pb-3 mt-5 shadow-lg">
     <div class="container">
         <div class="row">
             
@@ -98,7 +98,7 @@
                     <li><a href="{% url 'arte:index' %}" class="text-white text-decoration-none footer-link-hover">Inicio</a></li>
                     <li><a href="{% url 'arte:categorias' %}" class="text-white text-decoration-none footer-link-hover">Categorías</a></li>
                     <li><a href="{% url 'arte:rutas' %}" class="text-white text-decoration-none footer-link-hover">Rutas</a></li>
-                    <li><a href="{% url 'arte:acerca' %}" class="text-white text-decoration-none footer-link-hover">Acerca</a></li>
+                    <li><a href="{% url 'arte:acerca' %}" class="text-white text-decoration-none footer-link-hover">Acerca de</a></li>
                     <li><a href="{% url 'arte:contacto' %}" class="text-white text-decoration-none footer-link-hover">Contacto</a></li>
                 </ul>
             </div>
@@ -123,5 +123,5 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     {% block extra_js %}{% endblock %}
-  </body>
+    </body>
 </html>
