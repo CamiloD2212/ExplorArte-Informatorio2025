@@ -1,25 +1,23 @@
-from django.contrib.auth.models import Group, Permission
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
 @receiver(post_migrate)
-def create_roles(sender, **kwargs):
-    if sender.name not in ["usuarios", "arte"]:
+def crear_roles_y_permisos(sender, **kwargs):
+    if sender.label != "usuarios":
         return
 
-    grupos = ["Visitante", "Miembro", "Colaborador"]
-    for rol in grupos:
-        Group.objects.get_or_create(name=rol)
+    miembro, _ = Group.objects.get_or_create(name="Miembro")
+    colaborador, _ = Group.objects.get_or_create(name="Colaborador")
 
-    miembro = Group.objects.get(name="Miembro")
-    colaborador = Group.objects.get(name="Colaborador")
+    ct_comentarios = ContentType.objects.get(app_label="comentarios", model="comentario")
 
-    permisos_comentarios = Permission.objects.filter(
-        codename__contains="comentario"
-    )
-    miembro.permissions.set(permisos_comentarios)
+    permisos = Permission.objects.filter(content_type=ct_comentarios)
 
-    permisos_arte = Permission.objects.filter(
-        content_type__app_label="arte"
-    )
-    colaborador.permissions.set(permisos_arte)
+    # Asignar todos los permisos de comentario a los dos roles
+    for permiso in permisos:
+        miembro.permissions.add(permiso)
+        colaborador.permissions.add(permiso)
+
+    print("✔ Roles y permisos actualizados")

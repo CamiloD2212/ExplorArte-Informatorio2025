@@ -1,0 +1,87 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}ExplorArte{% endblock %}</title>
+
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Leaflet CSS (para mapas) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'arte:index' %}">
+          <span class="me-2">🎨</span>
+          <strong>ExplorArte</strong>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link" href="{% url 'arte:index' %}">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'arte:categorias' %}">Categorías</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'arte:rutas' %}">Rutas</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'arte:acerca' %}">Acerca</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'arte:contacto' %}">Contacto</a></li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="#">👤 {{ user.username }}</a>
+              </li>
+              <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-link nav-link text-danger" style="display:inline; padding:0;">
+                      Cerrar sesión
+                  </button>
+              </form>
+
+            {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-success" href="{% url 'register' %}">Registrarse</a>
+                  </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="py-4">
+      <div class="container">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container text-center">
+        © 2025 ExplorArte - Proyecto Informatorio
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>
