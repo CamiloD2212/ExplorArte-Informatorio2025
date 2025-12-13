@@ -17,15 +17,15 @@
                 
                 <section class="card-formulario p-4 p-lg-5 mb-5">
                     <h2 class="h4 mb-4 font-weight-bold title-acerca-main">¿Qué es ExplorArte?</h2>
-                    <p class="lead text-muted mb-4">ExplorArte es un proyecto del curso Informatorio 2025 para mostrar, documentar y explorar obras artísticas de la ciudad. Nuestro objetivo es servir como un mapa interactivo y un archivo digital accesible para todos los amantes del arte local.</p>
+                    <p class="text-dark mb-4 acerca-text-unified">ExplorArte es un proyecto del curso Informatorio 2025 para mostrar, documentar y explorar obras artísticas de la ciudad. Nuestro objetivo es servir como un mapa interactivo y un archivo digital accesible para todos los amantes del arte local.</p>
                     
                     <h2 class="h4 mb-4 font-weight-bold title-acerca-main">Nuestra Misión</h2>
-                    <p class="lead text-muted">ExplorArte busca ser el <b>archivo digital</b> y el <b>mapa interactivo</b> de referencia para el
+                    <p class="text-dark acerca-text-unified">ExplorArte busca ser el <b>archivo digital</b> y el <b>mapa interactivo</b> de referencia para el
                     arte local. Queremos que cualquier persona, desde el habitante de toda la vida hasta el visitante curioso, pueda:
                     
                     <br><br>
                     
-                    <ol class="list-unstyled lead text-muted px-3 mt-3">
+                    <ol class="list-unstyled text-dark px-3 mt-3">
                         <li class="mb-2">1. <b>Descubrir</b> nuevas obras de arte cerca de su ubicación.</li>
                         <li class="mb-2">2. <b>Aprender</b> sobre el artista, la historia y el significado detrás de cada pieza.</li>
                         <li class="mb-2">3. <b>Acceder</b> fácilmente a la documentación fotográfica y textual de cada obra.</li>
@@ -44,7 +44,7 @@
                         <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
                             <span class="member-icon mr-3">👤</span>
                             <div>
-                                <strong class="text-dark">Desza Camilo</strong>
+                                <strong class="text-dark acerca-strong-unified">Desza Camilo</strong>
                                 <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
                                 <span class="text-muted mx-1">|</span>
                                 <a href="#" target="_blank" class="text-purple-link">GitHub</a>
@@ -54,7 +54,7 @@
                         <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
                             <span class="member-icon mr-3">👤</span>
                             <div>
-                                <strong class="text-dark">Obando Gabriel</strong>
+                                <strong class="text-dark acerca-strong-unified">Obando Gabriel</strong>
                                 <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
                                 <span class="text-muted mx-1">|</span>
                                 <a href="#" target="_blank" class="text-purple-link">GitHub</a>
@@ -64,7 +64,7 @@
                         <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
                             <span class="member-icon mr-3">👤</span>
                             <div>
-                                <strong class="text-dark">Feldmann Axel</strong>
+                                <strong class="text-dark acerca-strong-unified">Feldmann Axel</strong>
                                 <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
                                 <span class="text-muted mx-1">|</span>
                                 <a href="#" target="_blank" class="text-purple-link">GitHub</a>
@@ -74,7 +74,7 @@
                         <li class="d-flex align-items-center mb-3 p-2 equipo-item-style">
                             <span class="member-icon mr-3">👤</span>
                             <div>
-                                <strong class="text-dark">Cardozo Diego</strong>
+                                <strong class="text-dark acerca-strong-unified">Cardozo Diego</strong>
                                 <a href="#" target="_blank" class="text-purple-link ms-3">LinkedIn</a>
                                 <span class="text-muted mx-1">|</span>
                                 <a href="#" target="_blank" class="text-purple-link">GitHub</a>
@@ -89,15 +89,15 @@
                 <section class="card-formulario p-4 p-lg-5">
                     <h2 class="h4 mb-4 font-weight-bold title-acerca-main">Estadísticas del Proyecto</h2>
                     
-                    <p class="lead text-muted mb-4">Total de obras documentadas: <strong class="text-purple-total">{{ total_artes }}</strong></p>
+                    <p class="text-dark mb-4 acerca-text-unified">Total de obras documentadas: <strong class="text-purple-total acerca-strong-unified">{{ total_artes }}</strong></p>
 
                     <h3 class="h5 mb-3 text-dark">Obras por Categoría</h3>
 
                     <div class="list-group list-group-flush">
                         {% for c in contadores %}
                             <div class="list-group-item d-flex justify-content-between align-items-center category-item-style">
-                                {{ c.categoria__nombre }}
-                                <span class="badge badge-purple-pill">{{ c.total }}</span>
+                                <span class="acerca-text-unified">{{ c.categoria__nombre }}</span>
+                                <span class="badge badge-purple-pill acerca-strong-unified">{{ c.total }}</span>
                             </div>
                         {% endfor %}
                     </div>

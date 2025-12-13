@@ -177,7 +177,7 @@ body {
 }
 
 /* ------------------------------------------- */
-/* 4. ESTILOS DE ACERCA DE */
+/* 4. ESTILOS DE ACERCA DE (UNIFICACIÓN) */
 /* ------------------------------------------- */
 
 .title-acerca-main {
@@ -186,6 +186,29 @@ body {
     padding-bottom: 10px;
     font-size: 1.4rem !important; 
 }
+
+/* Unificación de tamaño y color del texto de contenido */
+.acerca-text-unified {
+    font-size: 1rem; /* Tamaño estándar */
+    color: var(--color-text-main) !important; /* Color consistente */
+}
+
+/* Unificación del grosor de la negrita */
+.acerca-text-unified b,
+.acerca-text-unified strong,
+.acerca-strong-unified,
+.card-formulario b,
+.card-formulario strong {
+    font-weight: 700 !important; /* Usar font-weight 700 para toda la negrita en Acerca */
+}
+
+/* Ajuste específico para el total de obras */
+.text-purple-total {
+    font-size: 1.5rem;
+    font-weight: 700 !important;
+    color: var(--color-primary-purple) !important;
+}
+
 
 /* ------------------------------------------- */
 /* 5. ESTILOS DEL FOOTER */
