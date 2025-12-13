@@ -33,7 +33,7 @@
   Últimas Obras Documentadas
 </h2>
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
 
   {% for arte in ultimas %}
     <div class="col">
@@ -80,5 +80,45 @@
   {% endfor %}
 
 </div>
+
+<hr class="my-5">
+
+<h2 class="fw-bold mb-4 border-bottom pb-2">
+  Mapa de Obras en Resistencia
+</h2>
+
+<div id="mapa-obras" class="shadow-sm mb-5"></div>
+
+<!-- DATA MARKERS -->
+<script id="markers-data" type="application/json">
+{{ markers_json|safe }}
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  console.log("Leaflet:", typeof L);
+
+  const data = document.getElementById("markers-data");
+  const markers = JSON.parse(data.textContent || "[]");
+
+  const mapa = L.map("mapa-obras").setView([-27.451, -58.986], 13);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap contributors"
+  }).addTo(mapa);
+
+  markers.forEach(m => {
+    if (m.lat && m.lng) {
+      L.marker([m.lat, m.lng])
+        .addTo(mapa)
+        .bindPopup(`<strong>${m.titulo}</strong><br>${m.artista}`);
+    }
+  });
+
+  setTimeout(() => mapa.invalidateSize(), 300);
+});
+</script>
+
 
 {% endblock %}

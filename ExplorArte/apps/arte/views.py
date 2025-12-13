@@ -4,6 +4,9 @@ from django.contrib import messages
 from django.conf import settings
 from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required, user_passes_test
+import json
+from django.urls import reverse
+from django.core.serializers.json import DjangoJSONEncoder
 
 from .models import Arte, Categoria, Artista
 from .forms import ArteForm
@@ -82,6 +85,7 @@ def parse_latlng(text):
 # ========================================
 #   VISTAS PRINCIPALES
 # ========================================
+
 def index(request):
     ultimas = Arte.objects.select_related('categoria', 'artista').order_by('-id')[:3]
 
@@ -92,14 +96,17 @@ def index(request):
             markers.append({
                 "id": a.id,
                 "titulo": a.titulo,
+                "artista": str(a.artista),
                 "lat": coord[0],
                 "lng": coord[1],
+                "url": reverse("arte:detalle_arte", args=[a.id])
             })
 
     return render(request, "index.html", {
         "ultimas": ultimas,
-        "markers": markers,
+        "markers_json": json.dumps(markers, cls=DjangoJSONEncoder)
     })
+
 
 
 def categorias(request):

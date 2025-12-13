@@ -7,9 +7,9 @@
     --color-text-label: #6c757d;
     --color-pink: #e91e63;
     --color-blue: #00acee;
-    --color-pale-purple: rgba(125, 68, 201, 0.1); /* Púrpura pálido para el difuminado */
-    --color-light-purple: #a064f0; /* Púrpura pastel para el segundo banner y footer */
-    --color-hover-white: #ffffff; /* Blanco puro para el hover del navbar */
+    --color-pale-purple: rgba(125, 68, 201, 0.1);
+    --color-light-purple: #a064f0;
+    --color-hover-white: #ffffff;
 }
 
 body {
@@ -18,253 +18,182 @@ body {
     padding-top: 75px;
 }
 
-.contacto-main, acerca-main {
+/* FIX: faltaban los puntos */
+.contacto-main,
+.acerca-main {
     padding-top: 0 !important; 
 }
 
 /* ------------------------------------------- */
-/* 0. ESTILOS DEL NAVBAR */
+/* NAVBAR */
 /* ------------------------------------------- */
 
-/* Fondo Púrpura Oscuro para el Navbar */
 .bg-dark-purple-custom {
     background-color: var(--color-dark-purple) !important;
-    background-image: linear-gradient(135deg, var(--color-dark-purple) 0%, var(--color-primary-purple) 100%) !important;
+    background-image: linear-gradient(
+        135deg,
+        var(--color-dark-purple) 0%,
+        var(--color-primary-purple) 100%
+    ) !important;
 }
 
-/* Enlaces principales del Navbar (Para la animación) */
 .navbar-nav .nav-link-custom {
     color: white !important;
     font-weight: 500;
-    transition: color 0.2s;
     position: relative; 
-    padding-bottom: 8px !important;
-    padding-top: 8px !important;
-    margin-left: 10px;
-    margin-right: 10px;
+    padding: 8px 0 !important;
+    margin: 0 10px;
 }
 
-/* CREACIÓN DE LA LÍNEA SUBRAYADO (White on Hover) */
 .navbar-nav .nav-link-custom::after {
     content: '';
     position: absolute;
-    width: 0; 
+    width: 0;
     height: 2px;
     bottom: 0;
-    left: 50%; 
-    background-color: var(--color-hover-white); /* Color BLANCO */
-    transition: width 0.3s ease-out, left 0.3s ease-out;
+    left: 50%;
+    background-color: var(--color-hover-white);
+    transition: all 0.3s ease;
 }
 
-/* ESTADO HOVER: La línea se extiende y el texto es blanco */
-.navbar-nav .nav-link-custom:hover::after, .navbar-nav .nav-link-custom.active::after {
+.navbar-nav .nav-link-custom:hover::after,
+.navbar-nav .nav-link-custom.active::after {
     width: 100%;
     left: 0;
 }
-.navbar-nav .nav-link-custom:hover, .navbar-nav .nav-link-custom.active {
-    color: var(--color-hover-white) !important; /* Mantiene el color blanco */
+
+.navbar-nav .nav-link-custom:hover,
+.navbar-nav .nav-link-custom.active {
+    color: var(--color-hover-white) !important;
 }
 
-/* Estilo para el botón Outline del Navbar (Iniciar Sesión) */
 .btn-outline-light-custom {
     color: white !important;
     border-color: white !important;
     font-weight: 600 !important;
-    transition: background-color 0.2s, color 0.2s;
 }
+
 .btn-outline-light-custom:hover {
     background-color: white !important;
     color: var(--color-primary-purple) !important;
 }
 
 /* ------------------------------------------- */
-/* 1. ESTILOS BASE Y BANNER MORADO (RESTO) */
+/* BANNERS */
 /* ------------------------------------------- */
 
 .contacto-header-bg {
-    /* Púrpura oscuro para banners */
-    background-color: var(--color-primary-purple) !important;
-    background-image: linear-gradient(135deg, rgba(125, 68, 201, 1) 0%, rgba(160, 100, 240, 1) 100%) !important;
+    background-image: linear-gradient(
+        135deg,
+        rgba(125, 68, 201, 1) 0%,
+        rgba(160, 100, 240, 1) 100%
+    );
     padding: 80px 0 !important;
-    border-radius: 0 !important; 
 }
 
 .info-banner-bg {
-    /* Púrpura Pastel para el banner de la misión en Index */
-    background-color: var(--color-light-purple) !important;
-    background-image: linear-gradient(135deg, var(--color-light-purple) 0%, #b580f5 100%) !important;
+    background-image: linear-gradient(
+        135deg,
+        var(--color-light-purple) 0%,
+        #b580f5 100%
+    );
 }
 
-.contacto-header-bg h1 { font-weight: 700 !important; font-size: 3rem !important; }
-.contacto-header-bg p { font-size: 1.2rem !important; opacity: 0.9; }
-
-/* Estilo para las tarjetas blancas elevadas (Formulario / Estadísticas / Misión) */
 .card-formulario {
     background-color: white !important;
     border-radius: 8px !important;
-    box-shadow: none !important; 
-    padding: 30px !important; 
+    padding: 30px !important;
     border: none !important;
-    position: relative; 
 }
 
-/* CLASE: Efecto de color difuminado púrpura pálido */
 .contact-center-card {
     box-shadow: 0 0 80px 30px var(--color-pale-purple) !important;
 }
 
 /* ------------------------------------------- */
-/* 2. ESTILOS DE CATEGORÍAS Y BOTONES DE MARCA */
+/* BOTONES */
 /* ------------------------------------------- */
 
-/* Color de texto principal de la marca (Púrpura) */
 .text-primary-custom {
     color: var(--color-primary-purple) !important;
 }
 
-/* Botón principal (Púrpura sólido) */
 .btn-primary-custom {
     background-color: var(--color-primary-purple) !important;
     border-color: var(--color-primary-purple) !important;
     color: white !important;
-    font-weight: 600 !important;
-    transition: background-color 0.2s, border-color 0.2s;
 }
+
 .btn-primary-custom:hover {
     background-color: var(--color-dark-purple) !important;
-    border-color: var(--color-dark-purple) !important;
 }
 
-/* Botón Outline (Borde Púrpura) */
-.btn-outline-primary-custom {
-    color: var(--color-primary-purple) !important;
-    border-color: var(--color-primary-purple) !important;
-    font-weight: 600 !important;
-}
-.btn-outline-primary-custom:hover {
-    background-color: var(--color-primary-purple) !important;
-    color: white !important;
-}
+/* ------------------------------------------- */
+/* FORMULARIOS */
+/* ------------------------------------------- */
 
-/* Estilo para la barra lateral de filtros */
-.sidebar-custom {
-    background-color: white;
-}
-
-/* Estilos para los campos de formulario de filtros, comentarios y login */
-.form-control-custom {
-    /* Aquí se define la apariencia por defecto y el hover/focus */
-    border-color: #ddd;
-    box-shadow: none !important;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-.form-control-custom:focus, .form-select-custom:focus {
-    border-color: var(--color-primary-purple);
-    box-shadow: 0 0 0 0.1rem rgba(125, 68, 201, 0.25) !important;
-}
+.form-control-custom,
 .form-select-custom {
     border-color: #ddd;
     box-shadow: none !important;
 }
 
-/* ------------------------------------------- */
-/* 3. ESTILOS DE LOGIN/REGISTRO (Específico) */
-/* ------------------------------------------- */
-.login-card, .registro-card {
-    /* Tarjeta limpia y centralizada para autenticación */
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+.form-control-custom:focus,
+.form-select-custom:focus {
+    border-color: var(--color-primary-purple);
+    box-shadow: 0 0 0 0.1rem rgba(125, 68, 201, 0.25) !important;
 }
 
 /* ------------------------------------------- */
-/* 4. ESTILOS DE ACERCA DE (UNIFICACIÓN) */
+/* LOGIN */
+/* ------------------------------------------- */
+
+.login-card,
+.registro-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.1);
+}
+
+/* ------------------------------------------- */
+/* ACERCA */
 /* ------------------------------------------- */
 
 .title-acerca-main {
     color: var(--color-primary-purple) !important;
     border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    font-size: 1.4rem !important; 
 }
 
-/* Unificación de tamaño y color del texto de contenido */
 .acerca-text-unified {
-    font-size: 1rem; /* Tamaño estándar */
-    color: var(--color-text-main) !important; /* Color consistente */
+    font-size: 1rem;
+    color: var(--color-text-main) !important;
 }
 
-/* Unificación del grosor de la negrita */
-.acerca-text-unified b,
-.acerca-text-unified strong,
-.acerca-strong-unified,
-.card-formulario b,
-.card-formulario strong {
-    font-weight: 700 !important; /* Usar font-weight 700 para toda la negrita en Acerca */
-}
+/* ------------------------------------------- */
+/* FOOTER */
+/* ------------------------------------------- */
 
-/* Ajuste específico para el total de obras */
-.text-purple-total {
-    font-size: 1.5rem;
-    font-weight: 700 !important;
-    color: var(--color-primary-purple) !important;
-}
-
-/* Responsive tweaks */
-@media (max-width: 767px) {
-  #map { height: 250px; }
-}
-
-/* --- Mejoras para el CONTACTO --- */
-
-/* Estilo principal del footer (Púrpura Claro/Pastel) */
 .footer-light-purple-custom {
-    background-color: var(--color-light-purple) !important;
-    background-image: linear-gradient(135deg, var(--color-primary-purple) 0%, var(--color-light-purple) 100%) !important;
+    background-image: linear-gradient(
+        135deg,
+        var(--color-primary-purple) 0%,
+        var(--color-light-purple) 100%
+    );
 }
 
-/* Estilo hover para enlaces del footer */
-.footer-link-hover:hover {
-    text-decoration: underline !important;
-    opacity: 0.8;
+/* =========================================== */
+/* MAPA LEAFLET – INDEX (CLAVE) */
+/* =========================================== */
+
+#mapa-obras {
+    width: 100%;
+    height: 450px;
+    min-height: 300px;
+    border-radius: 8px;
 }
 
-/* La clase .footer-dark original ya no es necesaria, pero la dejamos para no eliminar código preexistente */
-.footer-dark {
-    background: #282828 !important; 
-    color: white !important;
-    padding: 30px 0 !important;
-    margin-top: 60px !important;
-    font-size: 0.9rem;
-}
-/* Alineación consistente */
-.informacion-contacto {
-    background-color: white !important; 
-    border-radius: 8px !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
-    padding: 25px !important;
-}
-
-/* Espacio entre redes del equipo */
-.contacto-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 0 !important;
-    border-bottom: 1px solid #eee !important;
-}
-.contacto-item:last-child {
-    border-bottom: none !important;
-}
-
-/* Iconos de redes */
-.social-icon {
-    width: 32px !important;
-    height: 32px !important;
-    line-height: 32px !important;
-    border-radius: 50% !important;
-    display: inline-block;
-    text-align: center;
-    font-size: 1rem !important;
-    color: #fff !important;
-    margin-left: 5px;
+@media (max-width: 767px) {
+    #mapa-obras {
+        height: 280px;
+    }
 }

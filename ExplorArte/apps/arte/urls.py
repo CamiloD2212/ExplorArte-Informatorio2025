@@ -27,12 +27,4 @@ urlpatterns = [
     # path('upload-imagen/', views.upload_imagen, name='upload_imagen'),
     # path('delete-imagen/', views.delete_imagen, name='delete_imagen'),
 ]
-# urlpatterns = [
-#     path('', views.index, name='index'),
-#     path('categorias/', views.categorias, name='categorias'),
-#     path('rutas/', views.rutas_view, name='rutas'),
-#     path('acerca/', views.acerca, name='acerca'),
-#     path('contacto/', views.contacto, name='contacto'),
-#     # detalle de obra
-#     path('arte/<int:pk>/', views.detalle_arte, name='detalle_arte'),
-# ]
+
