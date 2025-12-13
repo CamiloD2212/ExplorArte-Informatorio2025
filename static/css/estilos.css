@@ -1,0 +1,43 @@
+/* estilos complementarios + overrides para bootstrap */
+body {
+  padding-top: 70px; /* para navbar fijo si lo hacés fijo */
+}
+
+/* Cards grid (usaremos clases bootstrap pero añadimos algunos ajustes) */
+.art-card .card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Sidebar */
+.sidebar {
+  border: 1px solid #e6e6e6;
+  padding: 15px;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+/* Small badge for counts */
+.cat-badge {
+  font-size: 0.9rem;
+  background: #6c757d;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* Footer */
+.footer {
+  background: #222;
+  color: white;
+  padding: 20px 0;
+  margin-top: 40px;
+}
+
+/* Map container */
+#map { height: 350px; width: 100%; }
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+  #map { height: 250px; }
+}
