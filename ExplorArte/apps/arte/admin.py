@@ -9,4 +9,5 @@ admin.site.register(Artista)
 @admin.register(Arte)
 class ArteAdmin(admin.ModelAdmin):
     form = ArteForm
-
+    list_display = ("titulo", "direccion")
+    search_fields = ("titulo", "direccion")

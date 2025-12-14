@@ -7,10 +7,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 import json
 from django.urls import reverse
 from django.core.serializers.json import DjangoJSONEncoder
-
+from django.shortcuts import render
+from apps.rutas.models import Ruta, RutaArte
 from .models import Arte, Categoria, Artista
 from .forms import ArteForm
-from apps.rutas.models import Ruta
 
 
 # ========================================
@@ -169,37 +169,34 @@ def categorias(request):
 
 def rutas_view(request):
     rutas = Ruta.objects.all()
-    selected_id = request.GET.get('ruta')
-    artes = Arte.objects.none()
     selected = None
+    artes_data = []
 
-    if selected_id:
-        try:
-            selected = rutas.get(id=selected_id)
-            artes = selected.artes.select_related('categoria', 'artista').all()
-        except Ruta.DoesNotExist:
-            pass
+    ruta_id = request.GET.get("ruta")
 
-    source = artes if selected else Arte.objects.all()
+    if ruta_id:
+        selected = Ruta.objects.get(id=ruta_id)
+        relaciones = RutaArte.objects.filter(ruta=selected).order_by("orden")
+        
+        for rel in relaciones:
+            arte = rel.arte
+            lat, lng = arte.ubicacion.split(",")
 
-    markers = []
-    for a in source:
-        coord = parse_latlng(a.ubicacion)
-        if coord:
-            markers.append({
-                "id": a.id,
-                "titulo": a.titulo,
-                "lat": coord[0],
-                "lng": coord[1],
+            artes_data.append({
+                "id": arte.id,
+                "titulo": arte.titulo,
+                "direccion": arte.direccion,
+                "lat": float(lat),
+                "lng": float(lng),
+                "imagen": arte.url_imagen.url,
+                "orden": rel.orden,
             })
 
     return render(request, "rutas.html", {
         "rutas": rutas,
         "selected": selected,
-        "artes": artes,
-        "markers": markers
+        "artes": artes_data,
     })
-
 
 def acerca(request):
     contadores = Arte.objects.values(
