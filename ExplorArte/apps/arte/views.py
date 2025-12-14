@@ -11,6 +11,7 @@ from django.shortcuts import render
 from apps.rutas.models import Ruta, RutaArte
 from .models import Arte, Categoria, Artista
 from .forms import ArteForm
+from apps.contactos.models import Contacto
 
 
 # ========================================
@@ -216,10 +217,18 @@ def acerca(request):
 
 def contacto(request):
     if request.method == "POST":
+        Contacto.objects.create(
+            nombre=request.POST.get("nombre"),
+            email=request.POST.get("email"),
+            asunto=request.POST.get("asunto"),
+            mensaje=request.POST.get("mensaje"),
+        )
+
         messages.success(request, "Gracias. Tu mensaje fue recibido.")
         return redirect('arte:contacto')
 
     return render(request, "contacto.html")
+
 
 
 def detalle_arte(request, pk):

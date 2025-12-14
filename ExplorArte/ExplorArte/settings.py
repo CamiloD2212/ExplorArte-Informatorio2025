@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apps.usuarios.apps.UsuariosConfig',
     'apps.comentarios',
     'apps.rutas',
+    'apps.contactos.apps.ContactosConfig',
 ]
 
 
