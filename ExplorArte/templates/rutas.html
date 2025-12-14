@@ -10,6 +10,7 @@
     display: flex;
     gap: 10px;
     margin-bottom: 12px;
+    align-items: center;
   }
 
   .obra-item img {
@@ -58,9 +59,17 @@
       {% for a in artes %}
         <div class="obra-item">
           <img src="{{ a.imagen }}">
-          <div>
+
+          <div class="flex-grow-1">
             <strong>{{ a.orden }}. {{ a.titulo }}</strong><br>
             <small>{{ a.direccion }}</small>
+          </div>
+
+          <div>
+            <a href="{% url 'arte:detalle_arte' a.id %}"
+               class="btn btn-sm btn-outline-primary">
+              Ver
+            </a>
           </div>
         </div>
       {% empty %}
@@ -107,7 +116,14 @@ artes.forEach((a, index) => {
 
   L.marker([a.lat, a.lng], { icon })
     .addTo(map)
-    .bindPopup(`<strong>${a.titulo}</strong>`);
+    .bindPopup(`
+      <strong>${a.titulo}</strong><br>
+      <small>${a.direccion}</small><br>
+      <a href="/arte/${a.id}/"
+         class="btn btn-sm btn-primary mt-2">
+        Ver detalle
+      </a>
+    `);
 });
 
 // === RECORRIDO REAL ===
