@@ -177,7 +177,7 @@ def rutas_view(request):
     if ruta_id:
         selected = Ruta.objects.get(id=ruta_id)
         relaciones = RutaArte.objects.filter(ruta=selected).order_by("orden")
-        
+
         for rel in relaciones:
             arte = rel.arte
             lat, lng = arte.ubicacion.split(",")
@@ -198,17 +198,18 @@ def rutas_view(request):
         "artes": artes_data,
     })
 
-def acerca(request):
-    contadores = Arte.objects.values(
-        'categoria__id', 'categoria__nombre'
-    ).annotate(total=Count('id')).order_by('-total')
 
-    equipo = [{"nombre": "Agustín Valdez", "linkedin": "#", "git": "#"}]
+def acerca(request):
     total_artes = Arte.objects.count()
+
+    contadores = Categoria.objects.annotate(
+        total=Count('arte')
+    ).values(
+        'nombre', 'total'
+    ).order_by('-total')
 
     return render(request, "acerca.html", {
         "contadores": contadores,
-        "equipo": equipo,
         "total_artes": total_artes,
     })
 
